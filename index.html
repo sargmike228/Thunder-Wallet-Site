@@ -245,6 +245,103 @@
       color: #6e6e73;
     }
 
+    /* --- Блок описания приложения --- */
+    .features-section {
+      margin-top: 60px;
+      max-width: 800px;
+      text-align: left;
+      padding: 0 20px;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    .features-section h2 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+      transition: transform 0.3s ease, border-color 0.3s;
+    }
+
+    .feature-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .feature-item h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .feature-item p {
+      font-size: 14px;
+      color: #86868b;
+      line-height: 1.5;
+    }
+
+    /* --- Хэши SHA256 --- */
+    .hash-section {
+      margin-top: 40px;
+      width: 100%;
+      max-width: 520px;
+      text-align: left;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 20px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .hash-section h3 {
+      font-size: 14px;
+      font-weight: 500;
+      color: #86868b;
+      margin-bottom: 12px;
+      letter-spacing: 0.3px;
+      text-transform: uppercase;
+    }
+
+    .hash-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #6e6e73;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .hash-item:last-child {
+      border-bottom: none;
+    }
+
+    .hash-item span:first-child {
+      font-weight: 500;
+    }
+
+    .hash-item code {
+      font-family: 'SF Mono', 'Menlo', monospace;
+      background: rgba(255,255,255,0.05);
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+    }
+
     /* --- Футер --- */
     footer {
       position: relative;
@@ -270,6 +367,7 @@
       .hero-title { font-size: 40px; }
       .hero-subtitle { font-size: 17px; }
       .glass-card { padding: 28px; }
+      .features-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -285,15 +383,15 @@
       <img src="thunder_wallet.ico" alt="Logo" onerror="this.style.display='none'">
       <span>Thunder Wallet</span>
     </div>
-    <div class="version-tag">v0.0.1</div>
+    <div class="version-tag">v1.1</div>
   </header>
 
   <main>
     <h1 class="hero-title">Молниеносный.<br>Безопасный. Твой.</h1>
-    <p class="hero-subtitle">Встречайте Thunder Wallet — криптокошелек нового поколения с мгновенной установкой и непревзойденной защитой ваших активов.</p>
+    <p class="hero-subtitle">Встречайте Thunder Wallet — некастодиальный Bitcoin Lightning кошелек с мгновенной установкой и непревзойденной защитой ваших активов.</p>
 
     <div class="glass-card">
-      <a href="ThunderWallet-0.0.1-x64.msi" id="main-download-btn" class="btn-primary">
+      <a href="ThunderWallet-1.1-x64.msi" id="main-download-btn" class="btn-primary">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
@@ -305,8 +403,52 @@
       <div class="sys-info" id="detected-os">Определена архитектура: Windows 64-bit</div>
 
       <div class="secondary-downloads">
-        <a href="ThunderWallet-0.0.1-x64.msi" class="btn-secondary">Скачать x64 (.msi)</a>
-        <a href="ThunderWallet-0.0.1-x86.msi" class="btn-secondary">Скачать x86 (.msi)</a>
+        <a href="ThunderWallet-1.1-x64.msi" class="btn-secondary">Скачать x64 (.msi)</a>
+        <a href="ThunderWallet-1.1-x86.msi" class="btn-secondary">Скачать x86 (.msi)</a>
+      </div>
+
+      <!-- Хэши SHA256 -->
+      <div class="hash-section">
+        <h3>Контрольные суммы (SHA256)</h3>
+        <div class="hash-item">
+          <span>x64 MSI</span>
+          <code>1ee13d0ab2c6fadf2ce57226d93557c8b46b2e9d816484ff7a118b200a1d7e13</code>
+        </div>
+        <div class="hash-item">
+          <span>x86 MSI</span>
+          <code>2bb474e50d36eeee1caa2aa8b202cac13c19dffc2603a001c3361612891983ab</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Описание приложения -->
+    <div class="features-section">
+      <h2>Почему Thunder Wallet?</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <h3>⚡ Мгновенные платежи</h3>
+          <p>Используйте Lightning Network для быстрых и дешевых транзакций в сети Биткоин.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🔒 Некастодиальный</h3>
+          <p>Ваши ключи — ваши монеты. Сид-фраза шифруется локально и никогда не передается.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🎨 Стильный интерфейс</h3>
+          <p>Дизайн в стиле Apple Liquid Glass — современный, интуитивный и приятный в использовании.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🛡️ Защита от брутфорса</h3>
+          <p>Встроенный механизм блокировки и контроля попыток входа для максимальной безопасности.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🌐 Полный контроль</h3>
+          <p>Управляйте каналами, балансами, платежами — всё в одном приложении без посредников.</p>
+        </div>
+        <div class="feature-item">
+          <h3>🔋 Энергоэффективность</h3>
+          <p>Оптимизирован для работы на слабых ноутбуках, потребляет минимум ресурсов.</p>
+        </div>
       </div>
     </div>
   </main>
@@ -323,14 +465,15 @@
 
       // Авто-определение x64 / x86
       const is32Bit = navigator.userAgent.indexOf("WOW64") !== -1 || 
-                      navigator.userAgent.indexOf("Win32") !== -1 && navigator.userAgent.indexOf("x64") === -1;
+                      (navigator.userAgent.indexOf("Win32") !== -1 && navigator.userAgent.indexOf("x64") === -1);
 
+      // Обновлённые названия файлов версии 1.1
       if (is32Bit) {
-        btn.href = "ThunderWallet-0.0.1-x86.msi";
+        btn.href = "ThunderWallet-1.1-x86.msi";
         btnText.innerText = "Установить (32-bit MSI)";
         osText.innerText = "Определена архитектура: Windows 32-bit";
       } else {
-        btn.href = "ThunderWallet-0.0.1-x64.msi";
+        btn.href = "ThunderWallet-1.1-x64.msi";
         btnText.innerText = "Установить (64-bit MSI)";
         osText.innerText = "Определена архитектура: Windows 64-bit";
       }
