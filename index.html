@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -164,7 +163,7 @@
       align-items: center;
       gap: 24px;
       width: 100%;
-      max-width: 800px; /* увеличено для размещения хэшей в одну строку */
+      max-width: 800px;
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s;
       animation: slideUp 1s ease-out;
     }
@@ -297,7 +296,78 @@
       line-height: 1.5;
     }
 
-    /* --- Хэши SHA256 (в одну строку без переноса) --- */
+    /* --- Что нового (v1.1) --- */
+    .whats-new-section {
+      margin-top: 60px;
+      max-width: 800px;
+      text-align: left;
+      padding: 0 20px;
+      animation: fadeIn 1.2s ease-out;
+    }
+
+    .whats-new-section h2 {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .whats-new-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-top: 20px;
+    }
+
+    .whats-new-item {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px;
+      transition: transform 0.3s ease, border-color 0.3s;
+    }
+
+    .whats-new-item:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .whats-new-item h3 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #ffffff;
+    }
+
+    .whats-new-item p {
+      font-size: 14px;
+      color: #86868b;
+      line-height: 1.5;
+    }
+
+    .whats-new-item ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 8px;
+    }
+
+    .whats-new-item li {
+      font-size: 13px;
+      color: #a1a1a6;
+      margin-bottom: 6px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .whats-new-item li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: #0071e3;
+    }
+
+    /* --- Хэши SHA256 --- */
     .hash-section {
       margin-top: 20px;
       width: 100%;
@@ -344,7 +414,7 @@
       padding: 2px 8px;
       border-radius: 6px;
       font-size: 11px;
-      white-space: nowrap; /* запрещаем перенос */
+      white-space: nowrap;
       flex: 1;
       text-align: right;
     }
@@ -359,6 +429,102 @@
       text-align: center;
     }
 
+    /* --- Модальные окна (Apple Style) --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-box {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(40px) saturate(200%);
+      -webkit-backdrop-filter: blur(40px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 36px;
+      padding: 40px;
+      max-width: 480px;
+      width: 90%;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      text-align: center;
+      animation: slideUp 0.3s ease;
+    }
+
+    .modal-box h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .modal-box p {
+      font-size: 16px;
+      color: #86868b;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .modal-btn {
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 600;
+      border: none;
+      border-radius: 22px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      min-width: 120px;
+    }
+
+    .modal-btn-primary {
+      background: linear-gradient(135deg, #0071e3 0%, #4796e6 100%);
+      color: #ffffff;
+      box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
+    }
+
+    .modal-btn-primary:hover {
+      transform: scale(1.02);
+    }
+
+    .modal-btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #f5f5f7;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .modal-btn-danger {
+      background: rgba(255, 69, 58, 0.8);
+      color: #ffffff;
+    }
+
+    .modal-btn-danger:hover {
+      background: rgba(255, 69, 58, 1);
+    }
+
     /* --- Ключевые анимации --- */
     @keyframes fadeIn {
       from { opacity: 0; }
@@ -370,6 +536,13 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* --- Адаптивность --- */
+    @media (max-width: 800px) {
+      .whats-new-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 600px) {
       .hero-title { font-size: 40px; }
       .hero-subtitle { font-size: 17px; }
@@ -378,6 +551,7 @@
       .hash-item { flex-wrap: wrap; }
       .hash-item span:first-child { margin-bottom: 4px; width: 100%; }
       .hash-item code { white-space: normal; word-break: break-all; text-align: left; }
+      .modal-box { padding: 24px; }
     }
   </style>
 </head>
@@ -401,7 +575,7 @@
     <p class="hero-subtitle">Встречайте Thunder Wallet — некастодиальный Bitcoin Lightning кошелек с мгновенной установкой и непревзойденной защитой ваших активов.</p>
 
     <div class="glass-card">
-      <a href="ThunderWallet-1.1-x64.msi" id="main-download-btn" class="btn-primary">
+      <a href="ThunderWallet-1.1-x64.msi" id="main-download-btn" class="btn-primary" data-arch="x64">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
@@ -413,8 +587,8 @@
       <div class="sys-info" id="detected-os">Определена архитектура: Windows 64-bit</div>
 
       <div class="secondary-downloads">
-        <a href="ThunderWallet-1.1-x64.msi" class="btn-secondary">Скачать x64 (.msi)</a>
-        <a href="ThunderWallet-1.1-x86.msi" class="btn-secondary">Скачать x86 (.msi)</a>
+        <a href="ThunderWallet-1.1-x64.msi" class="btn-secondary" data-arch="x64">Скачать x64 (.msi)</a>
+        <a href="ThunderWallet-1.1-x86.msi" class="btn-secondary" data-arch="x86">Скачать x86 (.msi)</a>
       </div>
 
       <!-- Хэши SHA256 -->
@@ -427,6 +601,38 @@
         <div class="hash-item">
           <span>x86 MSI</span>
           <code>2bb474e50d36eeee1caa2aa8b202cac13c19dffc2603a001c3361612891983ab</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Что нового в v1.1 -->
+    <div class="whats-new-section">
+      <h2>Что нового в Thunder Wallet v1.1?</h2>
+      <div class="whats-new-grid">
+        <div class="whats-new-item">
+          <h3>🔒 Безопасность</h3>
+          <ul>
+            <li>Шифрование сид-фразы: Argon2id (64 МиБ памяти, 3 прохода) — устойчиво к GPU/ASIC.</li>
+            <li>Старые кошельки (PBKDF2) тихо мигрируют при разблокировке.</li>
+            <li>Обязательный пароль с живым чек-листом (минимум 8 символов, буквы, цифры, спецсимвол).</li>
+            <li>Защита от брутфорса: после 3 неудачных попыток блокировка растёт до 15 мин.</li>
+          </ul>
+        </div>
+        <div class="whats-new-item">
+          <h3>⚡ Производительность</h3>
+          <ul>
+            <li>Глобальный аллокатор заменён на <strong>mimalloc</strong> — быстрее, меньше фрагментации.</li>
+            <li>Оптимизирован для слабых ноутбуков и большого числа мелких структур.</li>
+          </ul>
+        </div>
+        <div class="whats-new-item">
+          <h3>🎨 Интерфейс</h3>
+          <ul>
+            <li>Полный визуальный редизайн в стиле Apple Liquid Glass.</li>
+            <li>Свой заголовок окна с кнопками управления (как на macOS).</li>
+            <li>Старт в полноэкранном режиме, выход по Esc.</li>
+            <li>Анимированная навигация и капсульные кнопки.</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -467,25 +673,197 @@
     © 2026 MikeCorporation_LLC(TM). Все права защищены. Разработано для Windows.
   </footer>
 
+  <!-- Модальные окна -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-box" id="modal-box">
+      <h2 id="modal-title">Заголовок</h2>
+      <p id="modal-text">Сообщение</p>
+      <div class="modal-actions" id="modal-actions">
+        <!-- Кнопки будут добавлены динамически -->
+      </div>
+    </div>
+  </div>
+
   <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const btn = document.getElementById("main-download-btn");
-      const btnText = document.getElementById("btn-text");
-      const osText = document.getElementById("detected-os");
+    // --- Определение ОС и архитектуры ---
+    function detectOSAndArch() {
+      const ua = navigator.userAgent;
+      const isWindows = ua.indexOf("Windows") !== -1 || ua.indexOf("Win") !== -1;
+      let arch = null;
+      let os = "unknown";
 
-      // Авто-определение x64 / x86
-      const is32Bit = navigator.userAgent.indexOf("WOW64") !== -1 || 
-                      (navigator.userAgent.indexOf("Win32") !== -1 && navigator.userAgent.indexOf("x64") === -1);
+      if (isWindows) {
+        os = "Windows";
+        // Определение архитектуры
+        const isARM = ua.indexOf("ARM") !== -1 || ua.indexOf("ARM64") !== -1;
+        const isWOW64 = ua.indexOf("WOW64") !== -1;
+        const isWin64 = ua.indexOf("Win64") !== -1 || ua.indexOf("x64") !== -1;
 
-      if (is32Bit) {
-        btn.href = "ThunderWallet-1.1-x86.msi";
-        btnText.innerText = "Установить (32-bit MSI)";
-        osText.innerText = "Определена архитектура: Windows 32-bit";
+        if (isARM) {
+          arch = "arm64";
+        } else if (isWOW64 || (isWin64 && !isWOW64)) {
+          arch = "x64";
+        } else {
+          arch = "x86";
+        }
       } else {
-        btn.href = "ThunderWallet-1.1-x64.msi";
-        btnText.innerText = "Установить (64-bit MSI)";
-        osText.innerText = "Определена архитектура: Windows 64-bit";
+        os = "non-windows";
+        // Можем попробовать определить ARM или другую архитектуру, но для не-Windows не важно.
+        if (ua.indexOf("ARM") !== -1) arch = "arm";
+        else if (ua.indexOf("x64") !== -1 || ua.indexOf("Win64") !== -1) arch = "x64";
+        else if (ua.indexOf("x86") !== -1) arch = "x86";
+        else arch = "unknown";
       }
+
+      return { os, arch };
+    }
+
+    // --- Показать модальное окно ---
+    function showModal(title, text, buttons) {
+      const overlay = document.getElementById('modal-overlay');
+      const titleEl = document.getElementById('modal-title');
+      const textEl = document.getElementById('modal-text');
+      const actionsEl = document.getElementById('modal-actions');
+
+      titleEl.textContent = title;
+      textEl.textContent = text;
+      actionsEl.innerHTML = '';
+
+      buttons.forEach((btn) => {
+        const button = document.createElement('a');
+        button.textContent = btn.label;
+        button.className = `modal-btn ${btn.class || 'modal-btn-primary'}`;
+        if (btn.href) {
+          button.href = btn.href;
+          button.download = btn.download !== false;
+        }
+        if (btn.onClick) {
+          button.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (btn.onClick) btn.onClick();
+          });
+        }
+        actionsEl.appendChild(button);
+      });
+
+      overlay.classList.add('active');
+    }
+
+    // --- Закрыть модальное окно ---
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.remove('active');
+    }
+
+    // --- Обработка кликов по ссылкам скачивания ---
+    function handleDownloadClick(e, link) {
+      e.preventDefault();
+      const href = link.getAttribute('href');
+      const archAttr = link.getAttribute('data-arch');
+      const { os, arch } = detectOSAndArch();
+
+      // Если не Windows
+      if (os !== 'Windows') {
+        showModal(
+          'Приложение только для Windows',
+          'Thunder Wallet работает только на Windows. Вы можете скачать установщик, но он не запустится на вашей ОС.',
+          [
+            { label: 'Всё равно скачать', href: href, class: 'modal-btn-danger' },
+            { label: 'Закрыть', onClick: closeModal, class: 'modal-btn-secondary' }
+          ]
+        );
+        return;
+      }
+
+      // Если ARM
+      if (arch === 'arm64' || arch === 'arm') {
+        showModal(
+          'ARM не поддерживается',
+          'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию, но это не гарантирует стабильную работу.',
+          [
+            { label: 'Скачать x64 (попробовать)', href: 'ThunderWallet-1.1-x64.msi', class: 'modal-btn-danger' },
+            { label: 'Закрыть', onClick: closeModal, class: 'modal-btn-secondary' }
+          ]
+        );
+        return;
+      }
+
+      // Определяем, какую версию пытается скачать пользователь
+      const targetArch = archAttr || 'x64'; // если не указано, считаем x64
+
+      // Если пользователь на x64 и пытается скачать x86
+      if (arch === 'x64' && targetArch === 'x86') {
+        showModal(
+          'Рекомендуется x64 версия',
+          'Ваше устройство поддерживает 64-битную архитектуру. Для лучшей производительности и стабильности рекомендуем скачать x64 версию.',
+          [
+            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'modal-btn-primary' },
+            { label: 'Всё равно x86', href: href, class: 'modal-btn-secondary' }
+          ]
+        );
+        return;
+      }
+
+      // Если пользователь на x86 и пытается скачать x64
+      if (arch === 'x86' && targetArch === 'x64') {
+        showModal(
+          'x64 не поддерживается',
+          'Ваше устройство работает на 32-битной архитектуре, которая не поддерживает x64-приложения. Рекомендуем скачать x86 версию.',
+          [
+            { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'modal-btn-primary' },
+            { label: 'Закрыть', onClick: closeModal, class: 'modal-btn-secondary' }
+          ]
+        );
+        return;
+      }
+
+      // Если всё правильно — разрешаем скачивание
+      window.location.href = href;
+    }
+
+    // --- Привязка событий ко всем ссылкам скачивания ---
+    document.addEventListener('DOMContentLoaded', function() {
+      const downloadLinks = document.querySelectorAll('a[href$=".msi"]');
+      downloadLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          handleDownloadClick(e, this);
+        });
+      });
+
+      // Обновление информации об ОС
+      const { os, arch } = detectOSAndArch();
+      const osText = document.getElementById('detected-os');
+      if (os === 'Windows') {
+        let archName = 'неизвестно';
+        if (arch === 'x64') archName = '64-bit (x64)';
+        else if (arch === 'x86') archName = '32-bit (x86)';
+        else if (arch === 'arm64') archName = 'ARM64';
+        else if (arch === 'arm') archName = 'ARM';
+        osText.textContent = `✔ Определена архитектура: Windows ${archName}`;
+      } else {
+        osText.textContent = '⚠ Thunder Wallet доступен только для Windows';
+      }
+
+      // Автоматический выбор главной кнопки (по умолчанию x64)
+      const mainBtn = document.getElementById('main-download-btn');
+      if (arch === 'x86' && os === 'Windows') {
+        mainBtn.href = 'ThunderWallet-1.1-x86.msi';
+        mainBtn.setAttribute('data-arch', 'x86');
+        document.getElementById('btn-text').textContent = 'Установить (32-bit MSI)';
+      } else if (arch === 'arm64' || arch === 'arm') {
+        mainBtn.href = 'ThunderWallet-1.1-x64.msi';
+        mainBtn.setAttribute('data-arch', 'x64');
+        document.getElementById('btn-text').textContent = 'ARM не поддерживается';
+      } else {
+        // x64 или unknown -> x64
+        mainBtn.href = 'ThunderWallet-1.1-x64.msi';
+        mainBtn.setAttribute('data-arch', 'x64');
+        document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
+      }
+    });
+
+    // Закрытие модального окна по клику вне него
+    document.getElementById('modal-overlay').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
     });
   </script>
 </body>
