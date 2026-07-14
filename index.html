@@ -8,18 +8,14 @@
     <meta name="google-site-verification" content="4ypH1Zn5eXNC3SzNZYctIv6496v1HyZ3sGTm7HxEAkY" />
     <style>
         :root {
-            --dynamic-island-bg: rgba(0, 0, 0, 0.88);
+            --dynamic-island-bg: rgba(0, 0, 0, 0.82);
             --dynamic-island-border: rgba(255, 255, 255, 0.18);
-            --dynamic-island-glow: rgba(255, 255, 255, 0.08);
             --accent-blue: #0071e3;
             --accent-blue-hover: #0077ed;
             --text-primary: #ffffff;
             --text-secondary: #86868b;
             --text-tertiary: #6e6e73;
             --danger: #ff453a;
-            --danger-hover: #ff5f55;
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.12);
             --transition-spring: cubic-bezier(0.22, 0.99, 0.41, 1.01);
             --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
         }
@@ -82,58 +78,9 @@
         }
 
         @keyframes float {
-            0% {
-                transform: translate(0, 0) scale(1);
-            }
-            50% {
-                transform: translate(80px, 50px) scale(1.15);
-            }
-            100% {
-                transform: translate(-50px, 100px) scale(0.9);
-            }
-        }
-
-        /* --- Навигация --- */
-        header {
-            position: fixed;
-            top: 20px;
-            width: calc(100% - 40px);
-            max-width: 1000px;
-            padding: 14px 28px;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(25px) saturate(180%);
-            -webkit-backdrop-filter: blur(25px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 100;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 600;
-            font-size: 19px;
-            letter-spacing: -0.5px;
-        }
-
-        .logo img {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-        }
-
-        .version-tag {
-            font-size: 12px;
-            padding: 4px 10px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            color: #86868b;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(80px, 50px) scale(1.15); }
+            100% { transform: translate(-50px, 100px) scale(0.9); }
         }
 
         /* --- Главный блок Hero --- */
@@ -229,16 +176,12 @@
             transition: 0.6s;
         }
 
-        .btn-primary:hover::before {
-            left: 100%;
-        }
+        .btn-primary:hover::before { left: 100%; }
         .btn-primary:hover {
             transform: scale(1.03);
             box-shadow: 0 12px 35px rgba(0, 113, 227, 0.6);
         }
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
+        .btn-primary:active { transform: scale(0.98); }
 
         .secondary-downloads {
             display: flex;
@@ -306,17 +249,8 @@
             transform: translateY(-4px);
             border-color: rgba(255, 255, 255, 0.2);
         }
-        .feature-item h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #ffffff;
-        }
-        .feature-item p {
-            font-size: 14px;
-            color: #86868b;
-            line-height: 1.5;
-        }
+        .feature-item h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
+        .feature-item p { font-size: 14px; color: #86868b; line-height: 1.5; }
 
         .whats-new-section {
             margin-top: 60px;
@@ -350,22 +284,8 @@
             transform: translateY(-4px);
             border-color: rgba(255, 255, 255, 0.2);
         }
-        .whats-new-item h3 {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #ffffff;
-        }
-        .whats-new-item p {
-            font-size: 14px;
-            color: #86868b;
-            line-height: 1.5;
-        }
-        .whats-new-item ul {
-            list-style: none;
-            padding: 0;
-            margin-top: 8px;
-        }
+        .whats-new-item h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #ffffff; }
+        .whats-new-item ul { list-style: none; padding: 0; margin-top: 8px; }
         .whats-new-item li {
             font-size: 13px;
             color: #a1a1a6;
@@ -408,14 +328,8 @@
             padding: 6px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.04);
         }
-        .hash-item:last-child {
-            border-bottom: none;
-        }
-        .hash-item span:first-child {
-            font-weight: 500;
-            flex-shrink: 0;
-            margin-right: 16px;
-        }
+        .hash-item:last-child { border-bottom: none; }
+        .hash-item span:first-child { font-weight: 500; flex-shrink: 0; margin-right: 16px; }
         .hash-item code {
             font-family: 'SF Mono', 'Menlo', monospace;
             background: rgba(255, 255, 255, 0.05);
@@ -437,11 +351,11 @@
         }
 
         /* ============================================================
-           DYNAMIC ISLAND — в стиле iOS (исправленное позиционирование)
+           ЕДИНЫЙ DYNAMIC ISLAND (ХЕДЕР + УВЕДОМЛЕНИЯ)
            ============================================================ */
         .dynamic-island-container {
             position: fixed;
-            top: 110px;                /* сдвинут вниз, чтобы не прилипать к хедеру */
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 10000;
@@ -450,17 +364,10 @@
             align-items: center;
             pointer-events: none;
             width: auto;
-            max-width: 94vw;
+            max-width: calc(100% - 40px);
         }
 
-        /* На мобильных устройствах чуть выше, но всё равно с отступом */
-        @media (max-width: 600px) {
-            .dynamic-island-container {
-                top: 90px;
-            }
-        }
-
-        /* Сама таблетка */
+        /* Основная таблетка */
         .dynamic-island {
             pointer-events: auto;
             background: var(--dynamic-island-bg);
@@ -480,9 +387,10 @@
                 opacity 0.35s ease,
                 transform 0.55s var(--transition-spring);
             overflow: hidden;
-            width: 140px;
-            height: 44px;
-            padding: 0 18px;
+            width: auto;
+            min-width: 280px;
+            height: 56px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -498,35 +406,31 @@
             transform: translateY(0) scale(1);
         }
 
-        /* Расширенное состояние (когда есть контент) */
+        /* Расширенное состояние (уведомление) */
         .dynamic-island.expanded {
-            width: 420px;
+            width: 460px;
             height: auto;
-            min-height: 120px;
+            min-height: 160px;
             border-radius: 36px;
-            padding: 20px 24px;
+            padding: 22px 28px;
             justify-content: flex-start;
             flex-direction: column;
-            gap: 16px;
-            cursor: default;
+            gap: 18px;
             box-shadow:
                 0 0 0 1px rgba(255, 255, 255, 0.08) inset,
                 0 25px 60px rgba(0, 0, 0, 0.6),
-                0 0 100px rgba(0, 113, 227, 0.1);
+                0 0 100px rgba(0, 113, 227, 0.12);
         }
 
-        /* Свёрнутое состояние — иконка + короткий текст */
-        .dynamic-island .collapsed-content {
+        /* Свёрнутый контент (логотип + версия) */
+        .collapsed-content {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 15px;
-            font-weight: 590;
-            color: #ffffff;
-            letter-spacing: -0.2px;
+            justify-content: space-between;
+            width: 100%;
+            gap: 16px;
             opacity: 1;
             transition: opacity 0.3s ease;
-            flex-shrink: 0;
         }
 
         .dynamic-island.expanded .collapsed-content {
@@ -535,12 +439,38 @@
             pointer-events: none;
         }
 
+        .collapsed-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.4px;
+        }
+
+        .collapsed-logo img {
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+        }
+
+        .collapsed-version {
+            font-size: 12px;
+            padding: 5px 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #a1a1a6;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            letter-spacing: -0.2px;
+        }
+
         /* Расширенный контент */
-        .dynamic-island .expanded-content {
+        .expanded-content {
             display: none;
             width: 100%;
             flex-direction: column;
-            gap: 14px;
+            gap: 16px;
             opacity: 0;
             transform: translateY(6px);
             transition: opacity 0.4s ease 0.15s, transform 0.4s var(--transition-spring) 0.15s;
@@ -571,18 +501,9 @@
             background: rgba(255, 255, 255, 0.08);
         }
 
-        .di-icon.warning {
-            background: rgba(255, 69, 58, 0.2);
-            color: #ff453a;
-        }
-        .di-icon.info {
-            background: rgba(0, 113, 227, 0.2);
-            color: #0071e3;
-        }
-        .di-icon.success {
-            background: rgba(48, 209, 88, 0.2);
-            color: #30d158;
-        }
+        .di-icon.warning { background: rgba(255, 69, 58, 0.2); color: #ff453a; }
+        .di-icon.info { background: rgba(0, 113, 227, 0.2); color: #0071e3; }
+        .di-icon.success { background: rgba(48, 209, 88, 0.2); color: #30d158; }
 
         .di-title {
             font-size: 16px;
@@ -610,21 +531,14 @@
             padding: 0;
             line-height: 1;
         }
-        .di-close:hover {
-            background: rgba(255, 255, 255, 0.22);
-            color: #ffffff;
-        }
-        .di-close:active {
-            transform: scale(0.9);
-            background: rgba(255, 255, 255, 0.3);
-        }
+        .di-close:hover { background: rgba(255, 255, 255, 0.22); color: #ffffff; }
+        .di-close:active { transform: scale(0.9); background: rgba(255, 255, 255, 0.3); }
 
         .di-message {
             font-size: 14px;
             color: #a1a1a6;
             line-height: 1.5;
             letter-spacing: -0.1px;
-            padding-right: 4px;
         }
 
         .di-actions {
@@ -681,10 +595,7 @@
             border-color: rgba(255, 255, 255, 0.25);
             transform: translateY(-1px);
         }
-        .di-btn-secondary:active {
-            transform: scale(0.96);
-            background: rgba(255, 255, 255, 0.24);
-        }
+        .di-btn-secondary:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.24); }
 
         .di-btn-danger {
             background: rgba(255, 69, 58, 0.75);
@@ -696,117 +607,74 @@
             box-shadow: 0 6px 20px rgba(255, 69, 58, 0.4);
             transform: translateY(-1px);
         }
-        .di-btn-danger:active {
-            transform: scale(0.96);
-            background: #ff5f55;
-        }
+        .di-btn-danger:active { transform: scale(0.96); background: #ff5f55; }
 
-        /* Пульсация острова при появлении */
         @keyframes islandPulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.5), 0 20px 50px rgba(0, 0, 0, 0.55);
-            }
-            70% {
-                box-shadow: 0 0 0 18px rgba(0, 113, 227, 0), 0 20px 50px rgba(0, 0, 0, 0.55);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(0, 113, 227, 0), 0 20px 50px rgba(0, 0, 0, 0.55);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.5), 0 20px 50px rgba(0, 0, 0, 0.55); }
+            70% { box-shadow: 0 0 0 18px rgba(0, 113, 227, 0), 0 20px 50px rgba(0, 0, 0, 0.55); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0), 0 20px 50px rgba(0, 0, 0, 0.55); }
         }
 
         .dynamic-island.pulse {
             animation: islandPulse 0.8s ease-out;
         }
 
-        /* Адаптивность Dynamic Island */
+        /* Адаптивность единого острова */
         @media (max-width: 520px) {
+            .dynamic-island {
+                min-width: auto;
+                width: auto;
+                padding: 0 18px;
+                height: 52px;
+            }
             .dynamic-island.expanded {
                 width: calc(100vw - 20px);
                 max-width: 400px;
                 border-radius: 32px;
-                padding: 16px 18px;
-                gap: 12px;
+                padding: 18px 20px;
+                gap: 14px;
             }
-            .di-btn {
-                padding: 10px 14px;
-                font-size: 13px;
-                min-width: 70px;
-            }
-            .di-title {
-                font-size: 15px;
-            }
-            .di-message {
-                font-size: 13px;
-            }
+            .di-btn { padding: 10px 14px; font-size: 13px; min-width: 70px; }
+            .di-title { font-size: 15px; }
+            .di-message { font-size: 13px; }
+            .collapsed-logo { font-size: 16px; gap: 8px; }
+            .collapsed-logo img { width: 22px; height: 22px; }
+            .collapsed-version { font-size: 11px; padding: 4px 10px; }
         }
 
         @media (max-width: 400px) {
+            .dynamic-island { padding: 0 14px; height: 48px; }
             .dynamic-island.expanded {
                 border-radius: 28px;
-                padding: 14px 16px;
-                gap: 10px;
+                padding: 16px 16px;
+                gap: 12px;
             }
-            .di-actions {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .di-btn {
-                width: 100%;
-                flex: none;
-            }
+            .di-actions { flex-direction: column; gap: 8px; }
+            .di-btn { width: 100%; flex: none; }
+            .collapsed-logo { font-size: 15px; }
+            .collapsed-version { font-size: 10px; padding: 3px 8px; }
         }
 
-        /* Анимации */
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(40px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 800px) {
-            .whats-new-grid {
-                grid-template-columns: 1fr;
-            }
+            .whats-new-grid { grid-template-columns: 1fr; }
         }
         @media (max-width: 600px) {
-            .hero-title {
-                font-size: 40px;
-            }
-            .hero-subtitle {
-                font-size: 17px;
-            }
-            .glass-card {
-                padding: 28px;
-                max-width: 100%;
-            }
-            .features-grid {
-                grid-template-columns: 1fr;
-            }
-            .hash-item {
-                flex-wrap: wrap;
-            }
-            .hash-item span:first-child {
-                margin-bottom: 4px;
-                width: 100%;
-            }
-            .hash-item code {
-                white-space: normal;
-                word-break: break-all;
-                text-align: left;
-            }
+            .hero-title { font-size: 40px; }
+            .hero-subtitle { font-size: 17px; }
+            .glass-card { padding: 28px; max-width: 100%; }
+            .features-grid { grid-template-columns: 1fr; }
+            .hash-item { flex-wrap: wrap; }
+            .hash-item span:first-child { margin-bottom: 4px; width: 100%; }
+            .hash-item code { white-space: normal; word-break: break-all; text-align: left; }
         }
     </style>
 </head>
@@ -817,14 +685,19 @@
         <div class="glow-ball glow-2"></div>
     </div>
 
-    <!-- Dynamic Island Container -->
+    <!-- Единый Dynamic Island (Хедер + Уведомления) -->
     <div class="dynamic-island-container" id="dynamic-island-container">
         <div class="dynamic-island" id="dynamic-island">
-            <!-- Свёрнутое содержимое (показывается когда остров не expanded) -->
+            <!-- Свёрнутое состояние (логотип + версия) -->
             <div class="collapsed-content" id="di-collapsed">
-                <span>⚡ Thunder</span>
+                <div class="collapsed-logo">
+                    <img src="thunder_wallet.ico" alt="Logo" onerror="this.style.display='none'">
+                    <span>Thunder Wallet</span>
+                </div>
+                <span class="collapsed-version">v1.1</span>
             </div>
-            <!-- Расширенное содержимое -->
+
+            <!-- Расширенное состояние (уведомление) -->
             <div class="expanded-content" id="di-expanded">
                 <div class="di-header">
                     <div class="di-icon" id="di-icon">⚠️</div>
@@ -832,20 +705,10 @@
                     <button class="di-close" id="di-close" aria-label="Закрыть">✕</button>
                 </div>
                 <p class="di-message" id="di-message">Сообщение</p>
-                <div class="di-actions" id="di-actions">
-                    <!-- Кнопки генерируются динамически -->
-                </div>
+                <div class="di-actions" id="di-actions"></div>
             </div>
         </div>
     </div>
-
-    <header>
-        <div class="logo">
-            <img src="thunder_wallet.ico" alt="Logo" onerror="this.style.display='none'">
-            <span>Thunder Wallet</span>
-        </div>
-        <div class="version-tag">v1.1</div>
-    </header>
 
     <main>
         <h1 class="hero-title">Молниеносный.<br>Безопасный. Твой.</h1>
@@ -949,9 +812,7 @@
 
     <script>
         (function() {
-            // --- Элементы Dynamic Island ---
             const island = document.getElementById('dynamic-island');
-            const islandContainer = document.getElementById('dynamic-island-container');
             const diCollapsed = document.getElementById('di-collapsed');
             const diExpanded = document.getElementById('di-expanded');
             const diIcon = document.getElementById('di-icon');
@@ -964,7 +825,6 @@
             let collapseTimer = null;
             let currentConfig = null;
 
-            // --- Свернуть остров ---
             function collapseIsland(instant = false) {
                 if (!isExpanded) return;
                 isExpanded = false;
@@ -975,31 +835,27 @@
                 if (instant) {
                     island.style.transition = 'none';
                 } else {
-                    island.style.transition =
-                        'width 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
+                    island.style.transition = 'width 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
                 }
 
-                island.classList.remove('expanded');
-                island.classList.remove('pulse');
-                island.style.width = '140px';
-                island.style.height = '44px';
-                island.style.borderRadius = '44px';
-                island.style.padding = '0 18px';
+                island.classList.remove('expanded', 'pulse');
+                island.style.width = '';
+                island.style.height = '';
+                island.style.borderRadius = '';
+                island.style.padding = '';
                 diCollapsed.style.opacity = '1';
-                diCollapsed.style.position = 'static';
-                diCollapsed.style.pointerEvents = 'auto';
+                diCollapsed.style.position = '';
+                diCollapsed.style.pointerEvents = '';
                 diExpanded.style.display = 'none';
                 diExpanded.style.opacity = '0';
 
                 if (instant) {
                     requestAnimationFrame(() => {
-                        island.style.transition =
-                            'width 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
+                        island.style.transition = 'width 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
                     });
                 }
             }
 
-            // --- Развернуть остров с контентом ---
             function expandIsland(config) {
                 if (collapseTimer) clearTimeout(collapseTimer);
                 collapseTimer = null;
@@ -1011,23 +867,21 @@
                 diMessage.textContent = config.message || '';
                 diActions.innerHTML = '';
 
-                if (config.buttons && config.buttons.length > 0) {
+                if (config.buttons && config.buttons.length) {
                     config.buttons.forEach(btn => {
                         const button = document.createElement(btn.href ? 'a' : 'button');
                         button.textContent = btn.label;
                         button.className = 'di-btn ' + (btn.class || 'di-btn-primary');
                         if (btn.href) {
                             button.href = btn.href;
-                            button.setAttribute('download', btn.download !== false ? '' : null);
+                            if (btn.download !== false) button.setAttribute('download', '');
                         }
                         button.addEventListener('click', function(e) {
                             if (btn.onClick) {
                                 e.preventDefault();
                                 btn.onClick();
                             }
-                            if (btn.closeAfter !== false) {
-                                collapseIsland();
-                            }
+                            if (btn.closeAfter !== false) collapseIsland();
                         });
                         diActions.appendChild(button);
                     });
@@ -1046,85 +900,54 @@
 
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
-                        island.classList.add('expanded');
-                        island.classList.add('pulse');
-                        island.style.width = '420px';
-                        island.style.height = 'auto';
-                        island.style.borderRadius = '36px';
-                        island.style.padding = '20px 24px';
+                        island.classList.add('expanded', 'pulse');
+                        island.style.width = '';
+                        island.style.height = '';
+                        island.style.borderRadius = '';
+                        island.style.padding = '';
                         diExpanded.style.opacity = '1';
                         isExpanded = true;
 
-                        setTimeout(() => {
-                            island.classList.remove('pulse');
-                        }, 800);
+                        setTimeout(() => island.classList.remove('pulse'), 800);
                     });
                 });
 
                 collapseTimer = setTimeout(() => {
-                    if (isExpanded && currentConfig === config) {
-                        collapseIsland();
-                    }
+                    if (isExpanded && currentConfig === config) collapseIsland();
                 }, 15000);
             }
 
-            // --- Показать Dynamic Island уведомление ---
             function showDynamicIsland(config) {
                 if (isExpanded) {
                     collapseIsland(true);
-                    setTimeout(() => {
-                        expandIsland(config);
-                    }, 350);
+                    setTimeout(() => expandIsland(config), 350);
                 } else {
-                    if (!island.classList.contains('active')) {
-                        island.classList.add('active');
-                    }
-                    setTimeout(() => {
-                        expandIsland(config);
-                    }, 100);
+                    if (!island.classList.contains('active')) island.classList.add('active');
+                    setTimeout(() => expandIsland(config), 100);
                 }
-
-                if (!island.classList.contains('active')) {
-                    island.classList.add('active');
-                }
+                if (!island.classList.contains('active')) island.classList.add('active');
             }
 
-            // --- Закрытие по крестику ---
             diClose.addEventListener('click', (e) => {
                 e.stopPropagation();
                 collapseIsland();
             });
 
-            // --- Клик по свёрнутому острову ---
             island.addEventListener('click', function(e) {
-                if (e.target.closest('.di-close') || e.target.closest('.di-btn')) {
-                    return;
-                }
-                if (!isExpanded && currentConfig) {
-                    expandIsland(currentConfig);
-                }
+                if (e.target.closest('.di-close') || e.target.closest('.di-btn')) return;
+                if (!isExpanded && currentConfig) expandIsland(currentConfig);
             });
 
-            // --- Определение ОС и архитектуры ---
             function detectOSAndArch() {
                 const ua = navigator.userAgent;
                 const isWindows = ua.indexOf("Windows") !== -1 || ua.indexOf("Win") !== -1;
-                let arch = null;
-                let os = "unknown";
-
+                let arch = null, os = "unknown";
                 if (isWindows) {
                     os = "Windows";
                     const isARM = ua.indexOf("ARM") !== -1 || ua.indexOf("ARM64") !== -1;
                     const isWOW64 = ua.indexOf("WOW64") !== -1;
                     const isWin64 = ua.indexOf("Win64") !== -1 || ua.indexOf("x64") !== -1;
-
-                    if (isARM) {
-                        arch = "arm64";
-                    } else if (isWOW64 || (isWin64 && !isWOW64)) {
-                        arch = "x64";
-                    } else {
-                        arch = "x86";
-                    }
+                    arch = isARM ? "arm64" : (isWOW64 || (isWin64 && !isWOW64) ? "x64" : "x86");
                 } else {
                     os = "non-windows";
                     if (ua.indexOf("ARM") !== -1) arch = "arm";
@@ -1132,11 +955,9 @@
                     else if (ua.indexOf("x86") !== -1) arch = "x86";
                     else arch = "unknown";
                 }
-
                 return { os, arch };
             }
 
-            // --- Обработка кликов по ссылкам скачивания ---
             function handleDownloadClick(e, link) {
                 e.preventDefault();
                 const href = link.getAttribute('href');
@@ -1145,12 +966,11 @@
 
                 if (os !== 'Windows') {
                     showDynamicIsland({
-                        icon: '💻',
-                        iconType: 'warning',
+                        icon: '💻', iconType: 'warning',
                         title: 'Только для Windows',
                         message: 'Thunder Wallet работает только на Windows. Вы можете скачать установщик, но он не запустится на вашей ОС.',
                         buttons: [
-                            { label: 'Всё равно скачать', href: href, class: 'di-btn-danger', closeAfter: true, download: true },
+                            { label: 'Всё равно скачать', href, class: 'di-btn-danger', closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
                         ]
                     });
@@ -1159,10 +979,9 @@
 
                 if (arch === 'arm64' || arch === 'arm') {
                     showDynamicIsland({
-                        icon: '🖥️',
-                        iconType: 'warning',
+                        icon: '🖥️', iconType: 'warning',
                         title: 'ARM не поддерживается',
-                        message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию, но стабильная работа не гарантируется.',
+                        message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию.',
                         buttons: [
                             { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-danger', closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
@@ -1172,27 +991,23 @@
                 }
 
                 const targetArch = archAttr || 'x64';
-
                 if (arch === 'x64' && targetArch === 'x86') {
                     showDynamicIsland({
-                        icon: '💡',
-                        iconType: 'info',
+                        icon: '💡', iconType: 'info',
                         title: 'Рекомендуется x64',
-                        message: 'Ваше устройство поддерживает 64-битную архитектуру. Для лучшей производительности советуем скачать x64 версию.',
+                        message: 'Ваше устройство поддерживает 64-бит. Для лучшей производительности советуем x64.',
                         buttons: [
                             { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-primary', closeAfter: true, download: true },
-                            { label: 'Всё равно x86', href: href, class: 'di-btn-secondary', closeAfter: true, download: true }
+                            { label: 'Всё равно x86', href, class: 'di-btn-secondary', closeAfter: true, download: true }
                         ]
                     });
                     return;
                 }
-
                 if (arch === 'x86' && targetArch === 'x64') {
                     showDynamicIsland({
-                        icon: '⚠️',
-                        iconType: 'warning',
+                        icon: '⚠️', iconType: 'warning',
                         title: 'x64 не поддерживается',
-                        message: 'Ваше устройство работает на 32-битной архитектуре. x64-приложения не запустятся. Рекомендуем скачать x86 версию.',
+                        message: 'Ваше устройство 32-битное. x64 не запустится. Рекомендуем x86.',
                         buttons: [
                             { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'di-btn-primary', closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
@@ -1201,27 +1016,20 @@
                     return;
                 }
 
-                // Всё корректно — начинаем загрузку
                 window.location.href = href;
                 showDynamicIsland({
-                    icon: '✅',
-                    iconType: 'success',
+                    icon: '✅', iconType: 'success',
                     title: 'Загрузка началась',
-                    message: 'Установщик Thunder Wallet (' + targetArch + ') загружается. Откройте файл после завершения загрузки.',
+                    message: `Установщик Thunder Wallet (${targetArch}) загружается.`,
                     buttons: [
                         { label: 'Отлично', onClick: () => collapseIsland(), class: 'di-btn-primary', closeAfter: true }
                     ]
                 });
             }
 
-            // --- Привязка событий ---
             document.addEventListener('DOMContentLoaded', function() {
                 const downloadLinks = document.querySelectorAll('a[href$=".msi"]');
-                downloadLinks.forEach(link => {
-                    link.addEventListener('click', function(e) {
-                        handleDownloadClick(e, this);
-                    });
-                });
+                downloadLinks.forEach(link => link.addEventListener('click', function(e) { handleDownloadClick(e, this); }));
 
                 const { os, arch } = detectOSAndArch();
                 const osText = document.getElementById('detected-os');
@@ -1251,15 +1059,13 @@
                     document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
                 }
 
-                setTimeout(() => {
-                    island.classList.add('active');
-                }, 600);
+                setTimeout(() => island.classList.add('active'), 400);
             });
 
             window.ThunderDynamicIsland = {
                 show: showDynamicIsland,
                 collapse: collapseIsland,
-                expand: expandIsland,
+                expand: expandIsland
             };
         })();
     </script>
