@@ -437,11 +437,11 @@
         }
 
         /* ============================================================
-           DYNAMIC ISLAND — в стиле iOS
+           DYNAMIC ISLAND — в стиле iOS (исправленное позиционирование)
            ============================================================ */
         .dynamic-island-container {
             position: fixed;
-            top: 16px;
+            top: 110px;                /* сдвинут вниз, чтобы не прилипать к хедеру */
             left: 50%;
             transform: translateX(-50%);
             z-index: 10000;
@@ -451,6 +451,13 @@
             pointer-events: none;
             width: auto;
             max-width: 94vw;
+        }
+
+        /* На мобильных устройствах чуть выше, но всё равно с отступом */
+        @media (max-width: 600px) {
+            .dynamic-island-container {
+                top: 90px;
+            }
         }
 
         /* Сама таблетка */
@@ -985,7 +992,6 @@
                 diExpanded.style.opacity = '0';
 
                 if (instant) {
-                    // Принудительно сбросить переход после мгновенного изменения
                     requestAnimationFrame(() => {
                         island.style.transition =
                             'width 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
@@ -995,12 +1001,10 @@
 
             // --- Развернуть остров с контентом ---
             function expandIsland(config) {
-                // Очищаем предыдущий таймер
                 if (collapseTimer) clearTimeout(collapseTimer);
                 collapseTimer = null;
                 currentConfig = config;
 
-                // Заполняем контент
                 diIcon.textContent = config.icon || '⚠️';
                 diIcon.className = 'di-icon ' + (config.iconType || 'warning');
                 diTitle.textContent = config.title || 'Уведомление';
@@ -1021,7 +1025,6 @@
                                 e.preventDefault();
                                 btn.onClick();
                             }
-                            // После клика по кнопке действия — сворачиваем остров
                             if (btn.closeAfter !== false) {
                                 collapseIsland();
                             }
@@ -1029,7 +1032,6 @@
                         diActions.appendChild(button);
                     });
                 } else {
-                    // Кнопка "Понятно" по умолчанию
                     const okBtn = document.createElement('button');
                     okBtn.textContent = 'Понятно';
                     okBtn.className = 'di-btn di-btn-primary';
@@ -1037,13 +1039,11 @@
                     diActions.appendChild(okBtn);
                 }
 
-                // Сначала показываем expanded content
                 diExpanded.style.display = 'flex';
                 diCollapsed.style.opacity = '0';
                 diCollapsed.style.position = 'absolute';
                 diCollapsed.style.pointerEvents = 'none';
 
-                // Даём браузеру кадр на отрисовку скрытого состояния
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         island.classList.add('expanded');
@@ -1055,14 +1055,12 @@
                         diExpanded.style.opacity = '1';
                         isExpanded = true;
 
-                        // Убираем пульсацию после анимации
                         setTimeout(() => {
                             island.classList.remove('pulse');
                         }, 800);
                     });
                 });
 
-                // Автосворачивание через 15 секунд бездействия
                 collapseTimer = setTimeout(() => {
                     if (isExpanded && currentConfig === config) {
                         collapseIsland();
@@ -1072,14 +1070,12 @@
 
             // --- Показать Dynamic Island уведомление ---
             function showDynamicIsland(config) {
-                // Если уже развёрнут — сначала сворачиваем мгновенно, потом разворачиваем с новым
                 if (isExpanded) {
                     collapseIsland(true);
                     setTimeout(() => {
                         expandIsland(config);
                     }, 350);
                 } else {
-                    // Если свёрнут — просто показываем и разворачиваем
                     if (!island.classList.contains('active')) {
                         island.classList.add('active');
                     }
@@ -1088,7 +1084,6 @@
                     }, 100);
                 }
 
-                // Убедимся что остров видим
                 if (!island.classList.contains('active')) {
                     island.classList.add('active');
                 }
@@ -1100,13 +1095,11 @@
                 collapseIsland();
             });
 
-            // --- Клик по свёрнутому острову — ничего не делаем (или можно показывать подсказку) ---
+            // --- Клик по свёрнутому острову ---
             island.addEventListener('click', function(e) {
-                // Если клик был по кнопке закрытия или кнопкам действий — не обрабатываем
                 if (e.target.closest('.di-close') || e.target.closest('.di-btn')) {
                     return;
                 }
-                // Если свёрнут — можно снова развернуть последнее уведомление
                 if (!isExpanded && currentConfig) {
                     expandIsland(currentConfig);
                 }
@@ -1150,7 +1143,6 @@
                 const archAttr = link.getAttribute('data-arch');
                 const { os, arch } = detectOSAndArch();
 
-                // Если не Windows
                 if (os !== 'Windows') {
                     showDynamicIsland({
                         icon: '💻',
@@ -1158,16 +1150,13 @@
                         title: 'Только для Windows',
                         message: 'Thunder Wallet работает только на Windows. Вы можете скачать установщик, но он не запустится на вашей ОС.',
                         buttons: [
-                            { label: 'Всё равно скачать', href: href, class: 'di-btn-danger', closeAfter: true,
-                                download: true },
-                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
-                                closeAfter: true }
+                            { label: 'Всё равно скачать', href: href, class: 'di-btn-danger', closeAfter: true, download: true },
+                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
                         ]
                     });
                     return;
                 }
 
-                // Если ARM
                 if (arch === 'arm64' || arch === 'arm') {
                     showDynamicIsland({
                         icon: '🖥️',
@@ -1175,10 +1164,8 @@
                         title: 'ARM не поддерживается',
                         message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию, но стабильная работа не гарантируется.',
                         buttons: [
-                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-danger',
-                                closeAfter: true, download: true },
-                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
-                                closeAfter: true }
+                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-danger', closeAfter: true, download: true },
+                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
                         ]
                     });
                     return;
@@ -1186,7 +1173,6 @@
 
                 const targetArch = archAttr || 'x64';
 
-                // x64 юзер качает x86
                 if (arch === 'x64' && targetArch === 'x86') {
                     showDynamicIsland({
                         icon: '💡',
@@ -1194,16 +1180,13 @@
                         title: 'Рекомендуется x64',
                         message: 'Ваше устройство поддерживает 64-битную архитектуру. Для лучшей производительности советуем скачать x64 версию.',
                         buttons: [
-                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-primary',
-                                closeAfter: true, download: true },
-                            { label: 'Всё равно x86', href: href, class: 'di-btn-secondary', closeAfter: true,
-                                download: true }
+                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-primary', closeAfter: true, download: true },
+                            { label: 'Всё равно x86', href: href, class: 'di-btn-secondary', closeAfter: true, download: true }
                         ]
                     });
                     return;
                 }
 
-                // x86 юзер качает x64
                 if (arch === 'x86' && targetArch === 'x64') {
                     showDynamicIsland({
                         icon: '⚠️',
@@ -1211,10 +1194,8 @@
                         title: 'x64 не поддерживается',
                         message: 'Ваше устройство работает на 32-битной архитектуре. x64-приложения не запустятся. Рекомендуем скачать x86 версию.',
                         buttons: [
-                            { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'di-btn-primary',
-                                closeAfter: true, download: true },
-                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
-                                closeAfter: true }
+                            { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'di-btn-primary', closeAfter: true, download: true },
+                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
                         ]
                     });
                     return;
@@ -1222,15 +1203,13 @@
 
                 // Всё корректно — начинаем загрузку
                 window.location.href = href;
-                // Показываем небольшое уведомление об успешном начале загрузки
                 showDynamicIsland({
                     icon: '✅',
                     iconType: 'success',
                     title: 'Загрузка началась',
                     message: 'Установщик Thunder Wallet (' + targetArch + ') загружается. Откройте файл после завершения загрузки.',
                     buttons: [
-                        { label: 'Отлично', onClick: () => collapseIsland(), class: 'di-btn-primary',
-                            closeAfter: true }
+                        { label: 'Отлично', onClick: () => collapseIsland(), class: 'di-btn-primary', closeAfter: true }
                     ]
                 });
             }
@@ -1244,7 +1223,6 @@
                     });
                 });
 
-                // Обновление информации об ОС
                 const { os, arch } = detectOSAndArch();
                 const osText = document.getElementById('detected-os');
                 if (os === 'Windows') {
@@ -1258,7 +1236,6 @@
                     osText.textContent = '⚠ Thunder Wallet доступен только для Windows';
                 }
 
-                // Автоматический выбор главной кнопки
                 const mainBtn = document.getElementById('main-download-btn');
                 if (arch === 'x86' && os === 'Windows') {
                     mainBtn.href = 'ThunderWallet-1.1-x86.msi';
@@ -1274,13 +1251,11 @@
                     document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
                 }
 
-                // Изначально показываем остров свёрнутым
                 setTimeout(() => {
                     island.classList.add('active');
                 }, 600);
             });
 
-            // Экспорт для возможного использования извне
             window.ThunderDynamicIsland = {
                 show: showDynamicIsland,
                 collapse: collapseIsland,
