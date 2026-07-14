@@ -8,7 +8,7 @@
     <style>
         :root {
             --dynamic-island-bg: rgba(0, 0, 0, 0.78);
-            --dynamic-island-border: rgba(255, 255, 255, 0.2);
+            --dynamic-island-border: rgba(255, 255, 255, 0.22);
             --accent-blue: #0071e3;
             --accent-blue-hover: #0077ed;
             --text-primary: #ffffff;
@@ -16,11 +16,10 @@
             --text-tertiary: #6e6e73;
             --danger: #ff453a;
             --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.12);
-            --spring-soft: cubic-bezier(0.34, 1.56, 0.64, 1);
-            --spring-smooth: cubic-bezier(0.22, 0.99, 0.41, 1.01);
-            --spring-bounce: cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            --transition-ease: cubic-bezier(0.25, 0.1, 0.25, 1);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.25, 0.1, 0.25, 1);
         }
 
         * {
@@ -46,7 +45,6 @@
             background-attachment: fixed;
         }
 
-        /* --- Живой фоновый свет (Liquid Glass Glows) --- */
         .glow-container {
             position: fixed;
             top: 0;
@@ -61,9 +59,9 @@
         .glow-ball {
             position: absolute;
             border-radius: 50%;
-            filter: blur(120px);
+            filter: blur(130px);
             opacity: 0.45;
-            animation: float 18s infinite alternate ease-in-out;
+            animation: float 20s infinite alternate ease-in-out;
             will-change: transform;
         }
 
@@ -81,24 +79,23 @@
             background: radial-gradient(circle, #bf5af2 0%, #5e5ce6 100%);
             bottom: -160px;
             right: -120px;
-            animation-delay: -9s;
+            animation-delay: -10s;
         }
 
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(60px, 40px) scale(1.08); }
-            50% { transform: translate(100px, -30px) scale(1.12); }
-            75% { transform: translate(-30px, 80px) scale(0.95); }
-            100% { transform: translate(-70px, 50px) scale(0.92); }
+            25% { transform: translate(70px, 50px) scale(1.1); }
+            50% { transform: translate(110px, -40px) scale(1.15); }
+            75% { transform: translate(-40px, 90px) scale(0.92); }
+            100% { transform: translate(-80px, 60px) scale(0.9); }
         }
 
-        /* --- Главный блок Hero --- */
         main {
             position: relative;
             z-index: 10;
             max-width: 900px;
             text-align: center;
-            margin-top: 180px;
+            margin-top: 160px;
             padding: 0 20px;
             display: flex;
             flex-direction: column;
@@ -115,7 +112,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 20px;
-            animation: fadeInUp 1s ease-out;
+            animation: fadeInUp 1s var(--ease-apple) both;
         }
 
         .hero-subtitle {
@@ -126,14 +123,14 @@
             line-height: 1.4;
             margin-bottom: 45px;
             letter-spacing: -0.3px;
-            animation: fadeInUp 1.2s ease-out 0.1s both;
+            animation: fadeInUp 1s var(--ease-apple) 0.15s both;
         }
 
         .glass-card {
             background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(40px) saturate(200%);
             -webkit-backdrop-filter: blur(40px) saturate(200%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             border-radius: 36px;
             padding: 48px;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.25);
@@ -143,14 +140,14 @@
             gap: 24px;
             width: 100%;
             max-width: 800px;
-            transition: transform 0.4s var(--spring-smooth), border-color 0.5s, box-shadow 0.4s;
-            animation: fadeInUp 1s ease-out 0.2s both;
+            transition: transform 0.45s var(--ease-apple), border-color 0.5s, box-shadow 0.45s;
+            animation: fadeInUp 1s var(--ease-apple) 0.25s both;
             will-change: transform;
         }
 
         .glass-card:hover {
             transform: translateY(-6px) scale(1.01);
-            border-color: rgba(255, 255, 255, 0.32);
+            border-color: rgba(255, 255, 255, 0.35);
             box-shadow: 0 30px 70px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.35);
         }
 
@@ -171,7 +168,7 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 8px 25px rgba(0, 113, 227, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-            transition: all 0.3s var(--spring-smooth);
+            transition: all 0.35s var(--ease-apple);
             overflow: hidden;
             letter-spacing: -0.2px;
             z-index: 1;
@@ -184,7 +181,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: 0.6s;
             z-index: -1;
         }
@@ -194,16 +191,9 @@
             transform: scale(1.03);
             box-shadow: 0 14px 40px rgba(0, 113, 227, 0.6);
         }
-        .btn-primary:active {
-            transform: scale(0.97);
-            transition: transform 0.15s var(--transition-ease);
-        }
+        .btn-primary:active { transform: scale(0.97); }
 
-        .secondary-downloads {
-            display: flex;
-            gap: 16px;
-            margin-top: 8px;
-        }
+        .secondary-downloads { display: flex; gap: 16px; margin-top: 8px; }
 
         .btn-secondary {
             font-size: 13px;
@@ -213,7 +203,7 @@
             border-radius: 12px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.25s var(--spring-smooth);
+            transition: all 0.25s var(--ease-apple);
             letter-spacing: -0.2px;
         }
 
@@ -224,33 +214,19 @@
             transform: translateY(-1px);
         }
 
-        .sys-info {
-            font-size: 12px;
-            color: #6e6e73;
-            letter-spacing: -0.1px;
-        }
+        .sys-info { font-size: 12px; color: #6e6e73; letter-spacing: -0.1px; }
 
         .features-section {
             margin-top: 60px;
             max-width: 800px;
             text-align: left;
             padding: 0 20px;
-            animation: fadeInUp 1.2s ease-out 0.3s both;
+            animation: fadeInUp 1s var(--ease-apple) 0.35s both;
         }
 
-        .features-section h2 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-        }
+        .features-section h2 { font-size: 32px; font-weight: 600; margin-bottom: 20px; letter-spacing: -0.5px; }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-            margin-top: 20px;
-        }
+        .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
 
         .feature-item {
             background: rgba(255, 255, 255, 0.04);
@@ -259,7 +235,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 22px;
             padding: 26px;
-            transition: transform 0.35s var(--spring-smooth), border-color 0.35s, box-shadow 0.35s;
+            transition: transform 0.35s var(--ease-apple), border-color 0.35s, box-shadow 0.35s;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
@@ -276,20 +252,10 @@
             max-width: 800px;
             text-align: left;
             padding: 0 20px;
-            animation: fadeInUp 1.2s ease-out 0.4s both;
+            animation: fadeInUp 1s var(--ease-apple) 0.45s both;
         }
-        .whats-new-section h2 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 20px;
-            letter-spacing: -0.5px;
-        }
-        .whats-new-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 24px;
-            margin-top: 20px;
-        }
+        .whats-new-section h2 { font-size: 32px; font-weight: 600; margin-bottom: 20px; letter-spacing: -0.5px; }
+        .whats-new-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; margin-top: 20px; }
         .whats-new-item {
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(25px);
@@ -297,7 +263,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 22px;
             padding: 26px;
-            transition: transform 0.35s var(--spring-smooth), border-color 0.35s, box-shadow 0.35s;
+            transition: transform 0.35s var(--ease-apple), border-color 0.35s, box-shadow 0.35s;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         .whats-new-item:hover {
@@ -314,12 +280,7 @@
             padding-left: 20px;
             position: relative;
         }
-        .whats-new-item li::before {
-            content: "•";
-            position: absolute;
-            left: 0;
-            color: #0071e3;
-        }
+        .whats-new-item li::before { content: "•"; position: absolute; left: 0; color: #0071e3; }
 
         .hash-section {
             margin-top: 20px;
@@ -372,7 +333,7 @@
         }
 
         /* ============================================================
-           ЕДИНЫЙ DYNAMIC ISLAND – Apple Style
+           DYNAMIC ISLAND – ПЛАВНЫЕ ПРЕМИУМ-АНИМАЦИИ
            ============================================================ */
         .dynamic-island-container {
             position: fixed;
@@ -400,12 +361,12 @@
                 0 24px 60px rgba(0, 0, 0, 0.7),
                 0 0 90px rgba(0, 113, 227, 0.09);
             transition:
-                width 0.55s var(--spring-soft),
-                height 0.55s var(--spring-soft),
-                border-radius 0.5s var(--spring-soft),
-                padding 0.5s var(--spring-soft),
-                opacity 0.4s ease,
-                transform 0.55s var(--spring-soft);
+                width 0.7s var(--ease-apple),
+                height 0.7s var(--ease-apple),
+                border-radius 0.6s var(--ease-apple),
+                padding 0.6s var(--ease-apple),
+                opacity 0.45s ease,
+                transform 0.6s var(--ease-apple);
             overflow: hidden;
             width: auto;
             min-width: 280px;
@@ -416,22 +377,21 @@
             justify-content: center;
             cursor: default;
             opacity: 0;
-            transform: translateY(-24px) scale(0.9);
+            transform: translateY(-24px) scale(0.92);
             user-select: none;
             white-space: nowrap;
-            will-change: width, height, padding, border-radius;
+            will-change: width, height, padding, border-radius, transform;
         }
 
         .dynamic-island.active {
             opacity: 1;
             transform: translateY(0) scale(1);
-            animation: islandAppear 0.7s var(--spring-soft) forwards;
+            animation: islandFadeIn 0.8s var(--ease-apple) forwards;
         }
 
-        @keyframes islandAppear {
-            0% { transform: translateY(-24px) scale(0.9); opacity: 0; }
-            60% { transform: translateY(2px) scale(1.02); opacity: 1; }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
+        @keyframes islandFadeIn {
+            0% { opacity: 0; transform: translateY(-24px) scale(0.92); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .dynamic-island.expanded {
@@ -447,13 +407,14 @@
                 0 0 0 1px rgba(255, 255, 255, 0.1) inset,
                 0 30px 70px rgba(0, 0, 0, 0.75),
                 0 0 110px rgba(0, 113, 227, 0.12);
-            animation: expandPulse 0.8s var(--spring-soft) forwards;
-        }
-
-        @keyframes expandPulse {
-            0% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.4), 0 30px 70px rgba(0,0,0,0.75); }
-            50% { box-shadow: 0 0 0 15px rgba(0, 113, 227, 0), 0 30px 70px rgba(0,0,0,0.75); }
-            100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0), 0 30px 70px rgba(0,0,0,0.75); }
+            transition:
+                width 0.7s var(--ease-apple),
+                height 0.7s var(--ease-apple),
+                border-radius 0.6s var(--ease-apple),
+                padding 0.6s var(--ease-apple),
+                opacity 0.45s ease,
+                transform 0.6s var(--ease-apple),
+                box-shadow 0.6s var(--ease-apple);
         }
 
         .collapsed-content {
@@ -463,14 +424,13 @@
             width: 100%;
             gap: 18px;
             opacity: 1;
-            transition: opacity 0.35s ease;
+            transition: opacity 0.3s ease;
         }
 
         .dynamic-island.expanded .collapsed-content {
             opacity: 0;
             position: absolute;
             pointer-events: none;
-            transition: opacity 0.25s ease;
         }
 
         .collapsed-logo {
@@ -506,19 +466,20 @@
         }
 
         .expanded-content {
-            display: none;
+            display: flex;
             width: 100%;
             flex-direction: column;
             gap: 18px;
             opacity: 0;
             transform: translateY(8px);
-            transition: opacity 0.45s ease 0.1s, transform 0.45s var(--spring-soft) 0.1s;
+            transition: opacity 0.4s ease 0.1s, transform 0.45s var(--ease-apple) 0.1s;
+            pointer-events: none;
         }
 
         .dynamic-island.expanded .expanded-content {
-            display: flex;
             opacity: 1;
             transform: translateY(0);
+            pointer-events: auto;
         }
 
         .di-header {
@@ -538,7 +499,6 @@
             font-size: 22px;
             flex-shrink: 0;
             background: rgba(255, 255, 255, 0.08);
-            transition: background 0.3s;
         }
 
         .di-icon.warning { background: rgba(255, 69, 58, 0.22); color: #ff453a; }
@@ -596,7 +556,7 @@
             cursor: pointer;
             text-decoration: none;
             border: none;
-            transition: all 0.25s var(--spring-smooth);
+            transition: all 0.3s var(--ease-apple);
             letter-spacing: -0.3px;
             display: inline-flex;
             align-items: center;
@@ -616,60 +576,34 @@
             color: #ffffff;
             box-shadow: 0 6px 20px rgba(0, 113, 227, 0.4);
         }
-        .di-btn-primary:hover {
-            background: #0077ed;
-            box-shadow: 0 10px 28px rgba(0, 113, 227, 0.55);
-            transform: translateY(-2px);
-        }
-        .di-btn-primary:active {
-            transform: scale(0.95);
-            box-shadow: 0 3px 10px rgba(0, 113, 227, 0.3);
-            transition: transform 0.1s ease;
-        }
+        .di-btn-primary:hover { background: #0077ed; box-shadow: 0 10px 28px rgba(0, 113, 227, 0.55); transform: translateY(-2px); }
+        .di-btn-primary:active { transform: scale(0.95); }
 
         .di-btn-secondary {
             background: rgba(255, 255, 255, 0.12);
             color: #f5f5f7;
             border: 1px solid rgba(255, 255, 255, 0.18);
         }
-        .di-btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: rgba(255, 255, 255, 0.28);
-            transform: translateY(-2px);
-        }
-        .di-btn-secondary:active {
-            transform: scale(0.95);
-            background: rgba(255, 255, 255, 0.28);
-        }
+        .di-btn-secondary:hover { background: rgba(255, 255, 255, 0.2); border-color: rgba(255, 255, 255, 0.28); transform: translateY(-2px); }
+        .di-btn-secondary:active { transform: scale(0.95); }
 
         .di-btn-danger {
             background: rgba(255, 69, 58, 0.8);
             color: #ffffff;
             box-shadow: 0 6px 20px rgba(255, 69, 58, 0.3);
         }
-        .di-btn-danger:hover {
-            background: #ff453a;
-            box-shadow: 0 10px 28px rgba(255, 69, 58, 0.45);
-            transform: translateY(-2px);
-        }
-        .di-btn-danger:active {
-            transform: scale(0.95);
-            background: #ff5f55;
-        }
+        .di-btn-danger:hover { background: #ff453a; box-shadow: 0 10px 28px rgba(255, 69, 58, 0.45); transform: translateY(-2px); }
+        .di-btn-danger:active { transform: scale(0.95); }
 
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
         @media (max-width: 800px) {
             .whats-new-grid { grid-template-columns: 1fr; }
         }
+
         @media (max-width: 600px) {
             .hero-title { font-size: 42px; }
             .hero-subtitle { font-size: 17px; }
@@ -699,10 +633,8 @@
         <div class="glow-ball glow-2"></div>
     </div>
 
-    <!-- Единый Dynamic Island (Хедер + Уведомления) -->
     <div class="dynamic-island-container" id="dynamic-island-container">
         <div class="dynamic-island" id="dynamic-island">
-            <!-- Свёрнутое состояние (логотип + версия) -->
             <div class="collapsed-content" id="di-collapsed">
                 <div class="collapsed-logo">
                     <div class="logo-icon">
@@ -714,8 +646,6 @@
                 </div>
                 <span class="collapsed-version">v1.1</span>
             </div>
-
-            <!-- Расширенное состояние (уведомление) -->
             <div class="expanded-content" id="di-expanded">
                 <div class="di-header">
                     <div class="di-icon" id="di-icon">⚠️</div>
@@ -768,26 +698,25 @@
                 <div class="whats-new-item">
                     <h3>🔒 Безопасность</h3>
                     <ul>
-                        <li>Шифрование сид-фразы: Argon2id (64 МиБ памяти, 3 прохода) — устойчиво к GPU/ASIC.</li>
-                        <li>Старые кошельки (PBKDF2) тихо мигрируют при разблокировке.</li>
-                        <li>Обязательный пароль с живым чек-листом (минимум 8 символов, буквы, цифры, спецсимвол).</li>
-                        <li>Защита от брутфорса: после 3 неудачных попыток блокировка растёт до 15 мин.</li>
+                        <li>Шифрование сид-фразы: Argon2id (64 МиБ памяти, 3 прохода).</li>
+                        <li>Старые кошельки тихо мигрируют при разблокировке.</li>
+                        <li>Обязательный пароль с живым чек-листом.</li>
+                        <li>Защита от брутфорса с нарастающей блокировкой.</li>
                     </ul>
                 </div>
                 <div class="whats-new-item">
                     <h3>⚡ Производительность</h3>
                     <ul>
-                        <li>Глобальный аллокатор заменён на <strong>mimalloc</strong> — быстрее, меньше фрагментации.</li>
-                        <li>Оптимизирован для слабых ноутбуков и большого числа мелких структур.</li>
+                        <li>Аллокатор заменён на <strong>mimalloc</strong>.</li>
+                        <li>Оптимизирован для слабых ноутбуков.</li>
                     </ul>
                 </div>
                 <div class="whats-new-item">
                     <h3>🎨 Интерфейс</h3>
                     <ul>
-                        <li>Полный визуальный редизайн в стиле Apple Liquid Glass.</li>
-                        <li>Свой заголовок окна с кнопками управления (как на macOS).</li>
-                        <li>Старт в полноэкранном режиме, выход по Esc.</li>
-                        <li>Анимированная навигация и капсульные кнопки.</li>
+                        <li>Редизайн в стиле Apple Liquid Glass.</li>
+                        <li>Собственный заголовок окна.</li>
+                        <li>Полноэкранный режим и анимированная навигация.</li>
                     </ul>
                 </div>
             </div>
@@ -798,27 +727,27 @@
             <div class="features-grid">
                 <div class="feature-item">
                     <h3>⚡ Мгновенные платежи</h3>
-                    <p>Используйте Lightning Network для быстрых и дешевых транзакций в сети Биткоин.</p>
+                    <p>Lightning Network для быстрых и дешёвых транзакций.</p>
                 </div>
                 <div class="feature-item">
                     <h3>🔒 Некастодиальный</h3>
-                    <p>Ваши ключи — ваши монеты. Сид-фраза шифруется локально и никогда не передается.</p>
+                    <p>Только вы контролируете свои ключи и средства.</p>
                 </div>
                 <div class="feature-item">
                     <h3>🎨 Стильный интерфейс</h3>
-                    <p>Дизайн в стиле Apple Liquid Glass — современный, интуитивный и приятный в использовании.</p>
+                    <p>Дизайн Apple Liquid Glass — современный и интуитивный.</p>
                 </div>
                 <div class="feature-item">
                     <h3>🛡️ Защита от брутфорса</h3>
-                    <p>Встроенный механизм блокировки и контроля попыток входа для максимальной безопасности.</p>
+                    <p>Встроенная блокировка и контроль попыток входа.</p>
                 </div>
                 <div class="feature-item">
                     <h3>🌐 Полный контроль</h3>
-                    <p>Управляйте каналами, балансами, платежами — всё в одном приложении без посредников.</p>
+                    <p>Управление каналами, балансами и платежами.</p>
                 </div>
                 <div class="feature-item">
                     <h3>🔋 Энергоэффективность</h3>
-                    <p>Оптимизирован для работы на слабых ноутбуках, потребляет минимум ресурсов.</p>
+                    <p>Оптимизирован для минимального потребления ресурсов.</p>
                 </div>
             </div>
         </div>
@@ -842,20 +771,11 @@
             let isExpanded = false;
             let collapseTimer = null;
             let currentConfig = null;
+            let transitionTimeout = null;
 
-            function collapseIsland(instant = false) {
-                if (!isExpanded) return;
-                isExpanded = false;
-                if (collapseTimer) clearTimeout(collapseTimer);
-                collapseTimer = null;
-                currentConfig = null;
-
-                if (instant) {
-                    island.style.transition = 'none';
-                } else {
-                    island.style.transition = 'width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-                }
-
+            function finishCollapse() {
+                if (isExpanded) return;
+                diExpanded.style.display = 'none';
                 island.classList.remove('expanded');
                 island.style.width = '';
                 island.style.height = '';
@@ -864,19 +784,40 @@
                 diCollapsed.style.opacity = '1';
                 diCollapsed.style.position = '';
                 diCollapsed.style.pointerEvents = '';
-                diExpanded.style.display = 'none';
-                diExpanded.style.opacity = '0';
+            }
+
+            function collapseIsland(instant = false) {
+                if (!isExpanded) return;
+                isExpanded = false;
+                if (collapseTimer) clearTimeout(collapseTimer);
+                collapseTimer = null;
+                if (transitionTimeout) clearTimeout(transitionTimeout);
 
                 if (instant) {
+                    island.style.transition = 'none';
+                    finishCollapse();
                     requestAnimationFrame(() => {
-                        island.style.transition = 'width 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.55s cubic-bezier(0.34, 1.56, 0.64, 1), border-radius 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease, transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                        island.style.transition = 'width 0.7s cubic-bezier(0.16, 1, 0.3, 1), height 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1), padding 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
                     });
+                    return;
                 }
+
+                island.style.transition = 'width 0.7s cubic-bezier(0.16, 1, 0.3, 1), height 0.7s cubic-bezier(0.16, 1, 0.3, 1), border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1), padding 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                diExpanded.style.opacity = '0';
+                diExpanded.style.transform = 'translateY(8px)';
+                island.classList.remove('expanded');
+                island.style.width = '';
+                island.style.height = '';
+                island.style.borderRadius = '';
+                island.style.padding = '';
+
+                transitionTimeout = setTimeout(() => {
+                    finishCollapse();
+                }, 700);
             }
 
             function expandIsland(config) {
-                if (collapseTimer) clearTimeout(collapseTimer);
-                collapseTimer = null;
+                if (transitionTimeout) clearTimeout(transitionTimeout);
                 currentConfig = config;
 
                 diIcon.textContent = config.icon || '⚠️';
@@ -919,27 +860,33 @@
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         island.classList.add('expanded');
-                        island.style.width = '';
-                        island.style.height = '';
-                        island.style.borderRadius = '';
-                        island.style.padding = '';
+                        island.style.width = '460px';
+                        island.style.height = 'auto';
+                        island.style.borderRadius = '36px';
+                        island.style.padding = '24px 30px';
                         diExpanded.style.opacity = '1';
+                        diExpanded.style.transform = 'translateY(0)';
                         isExpanded = true;
                     });
                 });
 
                 collapseTimer = setTimeout(() => {
                     if (isExpanded && currentConfig === config) collapseIsland();
-                }, 15000);
+                }, 12000);
             }
 
             function showDynamicIsland(config) {
                 if (isExpanded) {
-                    collapseIsland(true);
-                    setTimeout(() => expandIsland(config), 300);
+                    collapseIsland();
+                    const checkCollapse = setInterval(() => {
+                        if (!isExpanded) {
+                            clearInterval(checkCollapse);
+                            expandIsland(config);
+                        }
+                    }, 50);
                 } else {
                     if (!island.classList.contains('active')) island.classList.add('active');
-                    setTimeout(() => expandIsland(config), 80);
+                    expandIsland(config);
                 }
                 if (!island.classList.contains('active')) island.classList.add('active');
             }
@@ -997,7 +944,7 @@
                     showDynamicIsland({
                         icon: '🖥️', iconType: 'warning',
                         title: 'ARM не поддерживается',
-                        message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию.',
+                        message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать x64-версию.',
                         buttons: [
                             { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-danger', closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
@@ -1011,7 +958,7 @@
                     showDynamicIsland({
                         icon: '💡', iconType: 'info',
                         title: 'Рекомендуется x64',
-                        message: 'Ваше устройство поддерживает 64-бит. Для лучшей производительности советуем x64.',
+                        message: 'Ваше устройство поддерживает 64-бит. Советуем x64.',
                         buttons: [
                             { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-primary', closeAfter: true, download: true },
                             { label: 'Всё равно x86', href, class: 'di-btn-secondary', closeAfter: true, download: true }
@@ -1023,7 +970,7 @@
                     showDynamicIsland({
                         icon: '⚠️', iconType: 'warning',
                         title: 'x64 не поддерживается',
-                        message: 'Ваше устройство 32-битное. x64 не запустится. Рекомендуем x86.',
+                        message: '32-битное устройство. Рекомендуем x86.',
                         buttons: [
                             { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'di-btn-primary', closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary', closeAfter: true }
@@ -1075,7 +1022,7 @@
                     document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
                 }
 
-                setTimeout(() => island.classList.add('active'), 300);
+                setTimeout(() => island.classList.add('active'), 200);
             });
 
             window.ThunderDynamicIsland = {
