@@ -1,871 +1,1292 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thunder Wallet — Защищенный криптокошелек нового поколения</title>
-  <link rel="icon" type="image/png" href="thunder_wallet.png">
-  <meta name="google-site-verification" content="4ypH1Zn5eXNC3SzNZYctIv6496v1HyZ3sGTm7HxEAkY" />
-  <style>
-    /* --- Базовые сбросы и шрифты в стиле Apple --- */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    body {
-      background-color: #000000;
-      color: #f5f5f7;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* --- Живой фоновый свет (Liquid Glows) --- */
-    .glow-container {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .glow-ball {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.5;
-      animation: float 18s infinite alternate ease-in-out;
-    }
-
-    .glow-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, #0071e3 0%, #5e5ce6 100%);
-      top: -100px;
-      left: -100px;
-    }
-
-    .glow-2 {
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, #bf5af2 0%, #5e5ce6 100%);
-      bottom: -150px;
-      right: -100px;
-      animation-delay: -9s;
-    }
-
-    @keyframes float {
-      0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(80px, 50px) scale(1.15); }
-      100% { transform: translate(-50px, 100px) scale(0.9); }
-    }
-
-    /* --- Навигация (Apple Glass Bar) --- */
-    header {
-      position: fixed;
-      top: 20px;
-      width: calc(100% - 40px);
-      max-width: 1000px;
-      padding: 14px 28px;
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(25px) saturate(180%);
-      -webkit-backdrop-filter: blur(25px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 30px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 100;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      font-weight: 600;
-      font-size: 19px;
-      letter-spacing: -0.5px;
-    }
-
-    .logo img {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-    }
-
-    .version-tag {
-      font-size: 12px;
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      color: #86868b;
-      border: 1px solid rgba(255, 255, 255, 0.05);
-    }
-
-    /* --- Главный блок Hero --- */
-    main {
-      position: relative;
-      z-index: 10;
-      max-width: 900px;
-      text-align: center;
-      margin-top: 180px;
-      padding: 0 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-title {
-      font-size: 64px;
-      font-weight: 700;
-      line-height: 1.08;
-      letter-spacing: -1.5px;
-      background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 20px;
-      animation: fadeIn 1s ease-out;
-    }
-
-    .hero-subtitle {
-      font-size: 22px;
-      font-weight: 400;
-      color: #86868b;
-      max-width: 640px;
-      line-height: 1.4;
-      margin-bottom: 45px;
-      letter-spacing: -0.3px;
-      animation: fadeIn 1.2s ease-out;
-    }
-
-    /* --- Apple Liquid Glass Карточка и Кнопки --- */
-    .glass-card {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(40px) saturate(200%);
-      -webkit-backdrop-filter: blur(40px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 36px;
-      padding: 48px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 24px;
-      width: 100%;
-      max-width: 800px;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.5s;
-      animation: slideUp 1s ease-out;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-5px) scale(1.01);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Главная кнопка установки Apple Style */
-    .btn-primary {
-      position: relative;
-      width: 100%;
-      padding: 18px 36px;
-      font-size: 18px;
-      font-weight: 600;
-      color: #ffffff;
-      background: linear-gradient(135deg, #0071e3 0%, #4796e6 100%);
-      border: none;
-      border-radius: 22px;
-      cursor: pointer;
-      text-decoration: none;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 8px 25px rgba(0, 113, 227, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      overflow: hidden;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0; left: -100%;
-      width: 100%; height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-      transition: 0.6s;
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
-    }
-
-    .btn-primary:hover {
-      transform: scale(1.03);
-      box-shadow: 0 12px 35px rgba(0, 113, 227, 0.6);
-    }
-
-    .btn-primary:active {
-      transform: scale(0.98);
-    }
-
-    /* Дополнительные ссылки для выбора разрядности */
-    .secondary-downloads {
-      display: flex;
-      gap: 16px;
-      margin-top: 8px;
-    }
-
-    .btn-secondary {
-      font-size: 13px;
-      color: #86868b;
-      text-decoration: none;
-      padding: 8px 16px;
-      border-radius: 12px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      transition: all 0.2s ease;
-    }
-
-    .btn-secondary:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .sys-info {
-      font-size: 12px;
-      color: #6e6e73;
-    }
-
-    /* --- Блок описания приложения --- */
-    .features-section {
-      margin-top: 60px;
-      max-width: 800px;
-      text-align: left;
-      padding: 0 20px;
-      animation: fadeIn 1.2s ease-out;
-    }
-
-    .features-section h2 {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: -0.5px;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 20px;
-    }
-
-    .feature-item {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 24px;
-      transition: transform 0.3s ease, border-color 0.3s;
-    }
-
-    .feature-item:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .feature-item h3 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
-
-    .feature-item p {
-      font-size: 14px;
-      color: #86868b;
-      line-height: 1.5;
-    }
-
-    /* --- Что нового (v1.1) --- */
-    .whats-new-section {
-      margin-top: 60px;
-      max-width: 800px;
-      text-align: left;
-      padding: 0 20px;
-      animation: fadeIn 1.2s ease-out;
-    }
-
-    .whats-new-section h2 {
-      font-size: 32px;
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: -0.5px;
-    }
-
-    .whats-new-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 24px;
-      margin-top: 20px;
-    }
-
-    .whats-new-item {
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 20px;
-      padding: 24px;
-      transition: transform 0.3s ease, border-color 0.3s;
-    }
-
-    .whats-new-item:hover {
-      transform: translateY(-4px);
-      border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .whats-new-item h3 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 8px;
-      color: #ffffff;
-    }
-
-    .whats-new-item p {
-      font-size: 14px;
-      color: #86868b;
-      line-height: 1.5;
-    }
-
-    .whats-new-item ul {
-      list-style: none;
-      padding: 0;
-      margin-top: 8px;
-    }
-
-    .whats-new-item li {
-      font-size: 13px;
-      color: #a1a1a6;
-      margin-bottom: 6px;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .whats-new-item li::before {
-      content: "•";
-      position: absolute;
-      left: 0;
-      color: #0071e3;
-    }
-
-    /* --- Хэши SHA256 --- */
-    .hash-section {
-      margin-top: 20px;
-      width: 100%;
-      text-align: left;
-      background: rgba(255, 255, 255, 0.03);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 16px 20px;
-      border: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .hash-section h3 {
-      font-size: 14px;
-      font-weight: 500;
-      color: #86868b;
-      margin-bottom: 10px;
-      letter-spacing: 0.3px;
-      text-transform: uppercase;
-    }
-
-    .hash-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: #6e6e73;
-      padding: 6px 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .hash-item:last-child {
-      border-bottom: none;
-    }
-
-    .hash-item span:first-child {
-      font-weight: 500;
-      flex-shrink: 0;
-      margin-right: 16px;
-    }
-
-    .hash-item code {
-      font-family: 'SF Mono', 'Menlo', monospace;
-      background: rgba(255,255,255,0.05);
-      padding: 2px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      white-space: nowrap;
-      flex: 1;
-      text-align: right;
-    }
-
-    /* --- Футер --- */
-    footer {
-      position: relative;
-      z-index: 10;
-      margin: 80px 0 30px;
-      font-size: 12px;
-      color: #6e6e73;
-      text-align: center;
-    }
-
-    /* --- Модальные окна (Apple Style) --- */
-    .modal-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .modal-overlay.active {
-      display: flex;
-    }
-
-    .modal-box {
-      background: rgba(255, 255, 255, 0.08);
-      backdrop-filter: blur(40px) saturate(200%);
-      -webkit-backdrop-filter: blur(40px) saturate(200%);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 36px;
-      padding: 40px;
-      max-width: 480px;
-      width: 90%;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-      text-align: center;
-      animation: slideUp 0.3s ease;
-    }
-
-    .modal-box h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 12px;
-    }
-
-    .modal-box p {
-      font-size: 16px;
-      color: #86868b;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .modal-btn {
-      padding: 12px 24px;
-      font-size: 16px;
-      font-weight: 600;
-      border: none;
-      border-radius: 22px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
-      min-width: 120px;
-    }
-
-    .modal-btn-primary {
-      background: linear-gradient(135deg, #0071e3 0%, #4796e6 100%);
-      color: #ffffff;
-      box-shadow: 0 8px 20px rgba(0, 113, 227, 0.3);
-    }
-
-    .modal-btn-primary:hover {
-      transform: scale(1.02);
-    }
-
-    .modal-btn-secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: #f5f5f7;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .modal-btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.2);
-    }
-
-    .modal-btn-danger {
-      background: rgba(255, 69, 58, 0.8);
-      color: #ffffff;
-    }
-
-    .modal-btn-danger:hover {
-      background: rgba(255, 69, 58, 1);
-    }
-
-    /* --- Ключевые анимации --- */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* --- Адаптивность --- */
-    @media (max-width: 800px) {
-      .whats-new-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .hero-title { font-size: 40px; }
-      .hero-subtitle { font-size: 17px; }
-      .glass-card { padding: 28px; max-width: 100%; }
-      .features-grid { grid-template-columns: 1fr; }
-      .hash-item { flex-wrap: wrap; }
-      .hash-item span:first-child { margin-bottom: 4px; width: 100%; }
-      .hash-item code { white-space: normal; word-break: break-all; text-align: left; }
-      .modal-box { padding: 24px; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thunder Wallet — Защищенный криптокошелек нового поколения</title>
+    <link rel="icon" type="image/png" href="thunder_wallet.png">
+    <meta name="google-site-verification" content="4ypH1Zn5eXNC3SzNZYctIv6496v1HyZ3sGTm7HxEAkY" />
+    <style>
+        :root {
+            --dynamic-island-bg: rgba(0, 0, 0, 0.88);
+            --dynamic-island-border: rgba(255, 255, 255, 0.18);
+            --dynamic-island-glow: rgba(255, 255, 255, 0.08);
+            --accent-blue: #0071e3;
+            --accent-blue-hover: #0077ed;
+            --text-primary: #ffffff;
+            --text-secondary: #86868b;
+            --text-tertiary: #6e6e73;
+            --danger: #ff453a;
+            --danger-hover: #ff5f55;
+            --glass-bg: rgba(255, 255, 255, 0.06);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --transition-spring: cubic-bezier(0.22, 0.99, 0.41, 1.01);
+            --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #000000;
+            color: #f5f5f7;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Живой фоновый свет --- */
+        .glow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-ball {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.5;
+            animation: float 18s infinite alternate ease-in-out;
+        }
+
+        .glow-1 {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #0071e3 0%, #5e5ce6 100%);
+            top: -100px;
+            left: -100px;
+        }
+
+        .glow-2 {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #bf5af2 0%, #5e5ce6 100%);
+            bottom: -150px;
+            right: -100px;
+            animation-delay: -9s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(80px, 50px) scale(1.15);
+            }
+            100% {
+                transform: translate(-50px, 100px) scale(0.9);
+            }
+        }
+
+        /* --- Навигация --- */
+        header {
+            position: fixed;
+            top: 20px;
+            width: calc(100% - 40px);
+            max-width: 1000px;
+            padding: 14px 28px;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 19px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo img {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+        }
+
+        .version-tag {
+            font-size: 12px;
+            padding: 4px 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: #86868b;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* --- Главный блок Hero --- */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 900px;
+            text-align: center;
+            margin-top: 180px;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-title {
+            font-size: 64px;
+            font-weight: 700;
+            line-height: 1.08;
+            letter-spacing: -1.5px;
+            background: linear-gradient(180deg, #ffffff 0%, #86868b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 22px;
+            font-weight: 400;
+            color: #86868b;
+            max-width: 640px;
+            line-height: 1.4;
+            margin-bottom: 45px;
+            letter-spacing: -0.3px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(40px) saturate(200%);
+            -webkit-backdrop-filter: blur(40px) saturate(200%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 36px;
+            padding: 48px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+            max-width: 800px;
+            transition: transform 0.5s var(--transition-smooth), border-color 0.5s;
+            animation: slideUp 1s ease-out;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px) scale(1.01);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary {
+            position: relative;
+            width: 100%;
+            padding: 18px 36px;
+            font-size: 18px;
+            font-weight: 600;
+            color: #ffffff;
+            background: linear-gradient(135deg, #0071e3 0%, #4796e6 100%);
+            border: none;
+            border-radius: 22px;
+            cursor: pointer;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(0, 113, 227, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.3s var(--transition-smooth);
+            overflow: hidden;
+            letter-spacing: -0.2px;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+        .btn-primary:hover {
+            transform: scale(1.03);
+            box-shadow: 0 12px 35px rgba(0, 113, 227, 0.6);
+        }
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .secondary-downloads {
+            display: flex;
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .btn-secondary {
+            font-size: 13px;
+            color: #86868b;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.2s ease;
+            letter-spacing: -0.2px;
+        }
+
+        .btn-secondary:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .sys-info {
+            font-size: 12px;
+            color: #6e6e73;
+            letter-spacing: -0.1px;
+        }
+
+        .features-section {
+            margin-top: 60px;
+            max-width: 800px;
+            text-align: left;
+            padding: 0 20px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .features-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .feature-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .feature-item p {
+            font-size: 14px;
+            color: #86868b;
+            line-height: 1.5;
+        }
+
+        .whats-new-section {
+            margin-top: 60px;
+            max-width: 800px;
+            text-align: left;
+            padding: 0 20px;
+            animation: fadeIn 1.2s ease-out;
+        }
+        .whats-new-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        .whats-new-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 24px;
+            margin-top: 20px;
+        }
+        .whats-new-item {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            transition: transform 0.3s ease, border-color 0.3s;
+        }
+        .whats-new-item:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        .whats-new-item h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+        .whats-new-item p {
+            font-size: 14px;
+            color: #86868b;
+            line-height: 1.5;
+        }
+        .whats-new-item ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 8px;
+        }
+        .whats-new-item li {
+            font-size: 13px;
+            color: #a1a1a6;
+            margin-bottom: 6px;
+            padding-left: 20px;
+            position: relative;
+        }
+        .whats-new-item li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #0071e3;
+        }
+
+        .hash-section {
+            margin-top: 20px;
+            width: 100%;
+            text-align: left;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 16px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .hash-section h3 {
+            font-size: 14px;
+            font-weight: 500;
+            color: #86868b;
+            margin-bottom: 10px;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+        }
+        .hash-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #6e6e73;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .hash-item:last-child {
+            border-bottom: none;
+        }
+        .hash-item span:first-child {
+            font-weight: 500;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+        .hash-item code {
+            font-family: 'SF Mono', 'Menlo', monospace;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            white-space: nowrap;
+            flex: 1;
+            text-align: right;
+        }
+
+        footer {
+            position: relative;
+            z-index: 10;
+            margin: 80px 0 30px;
+            font-size: 12px;
+            color: #6e6e73;
+            text-align: center;
+        }
+
+        /* ============================================================
+           DYNAMIC ISLAND — в стиле iOS
+           ============================================================ */
+        .dynamic-island-container {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+            width: auto;
+            max-width: 94vw;
+        }
+
+        /* Сама таблетка */
+        .dynamic-island {
+            pointer-events: auto;
+            background: var(--dynamic-island-bg);
+            backdrop-filter: blur(44px) saturate(200%);
+            -webkit-backdrop-filter: blur(44px) saturate(200%);
+            border: 1px solid var(--dynamic-island-border);
+            border-radius: 44px;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.06) inset,
+                0 20px 50px rgba(0, 0, 0, 0.55),
+                0 0 80px rgba(0, 113, 227, 0.08);
+            transition:
+                width 0.65s var(--transition-spring),
+                height 0.65s var(--transition-spring),
+                border-radius 0.55s var(--transition-spring),
+                padding 0.55s var(--transition-spring),
+                opacity 0.35s ease,
+                transform 0.55s var(--transition-spring);
+            overflow: hidden;
+            width: 140px;
+            height: 44px;
+            padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: default;
+            opacity: 0;
+            transform: translateY(-20px) scale(0.92);
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .dynamic-island.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Расширенное состояние (когда есть контент) */
+        .dynamic-island.expanded {
+            width: 420px;
+            height: auto;
+            min-height: 120px;
+            border-radius: 36px;
+            padding: 20px 24px;
+            justify-content: flex-start;
+            flex-direction: column;
+            gap: 16px;
+            cursor: default;
+            box-shadow:
+                0 0 0 1px rgba(255, 255, 255, 0.08) inset,
+                0 25px 60px rgba(0, 0, 0, 0.6),
+                0 0 100px rgba(0, 113, 227, 0.1);
+        }
+
+        /* Свёрнутое состояние — иконка + короткий текст */
+        .dynamic-island .collapsed-content {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            font-weight: 590;
+            color: #ffffff;
+            letter-spacing: -0.2px;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .dynamic-island.expanded .collapsed-content {
+            opacity: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        /* Расширенный контент */
+        .dynamic-island .expanded-content {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 14px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.4s ease 0.15s, transform 0.4s var(--transition-spring) 0.15s;
+        }
+
+        .dynamic-island.expanded .expanded-content {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .di-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .di-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .di-icon.warning {
+            background: rgba(255, 69, 58, 0.2);
+            color: #ff453a;
+        }
+        .di-icon.info {
+            background: rgba(0, 113, 227, 0.2);
+            color: #0071e3;
+        }
+        .di-icon.success {
+            background: rgba(48, 209, 88, 0.2);
+            color: #30d158;
+        }
+
+        .di-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+            flex: 1;
+            line-height: 1.2;
+        }
+
+        .di-close {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #86868b;
+            font-size: 16px;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            padding: 0;
+            line-height: 1;
+        }
+        .di-close:hover {
+            background: rgba(255, 255, 255, 0.22);
+            color: #ffffff;
+        }
+        .di-close:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .di-message {
+            font-size: 14px;
+            color: #a1a1a6;
+            line-height: 1.5;
+            letter-spacing: -0.1px;
+            padding-right: 4px;
+        }
+
+        .di-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .di-btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 590;
+            border-radius: 100px;
+            cursor: pointer;
+            text-decoration: none;
+            border: none;
+            transition: all 0.25s var(--transition-smooth);
+            letter-spacing: -0.2px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex: 1;
+            min-width: 90px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .di-btn-primary {
+            background: var(--accent-blue);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(0, 113, 227, 0.35);
+        }
+        .di-btn-primary:hover {
+            background: var(--accent-blue-hover);
+            box-shadow: 0 6px 20px rgba(0, 113, 227, 0.5);
+            transform: translateY(-1px);
+        }
+        .di-btn-primary:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.3);
+        }
+
+        .di-btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #f5f5f7;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .di-btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.25);
+            transform: translateY(-1px);
+        }
+        .di-btn-secondary:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.24);
+        }
+
+        .di-btn-danger {
+            background: rgba(255, 69, 58, 0.75);
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(255, 69, 58, 0.25);
+        }
+        .di-btn-danger:hover {
+            background: #ff453a;
+            box-shadow: 0 6px 20px rgba(255, 69, 58, 0.4);
+            transform: translateY(-1px);
+        }
+        .di-btn-danger:active {
+            transform: scale(0.96);
+            background: #ff5f55;
+        }
+
+        /* Пульсация острова при появлении */
+        @keyframes islandPulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 113, 227, 0.5), 0 20px 50px rgba(0, 0, 0, 0.55);
+            }
+            70% {
+                box-shadow: 0 0 0 18px rgba(0, 113, 227, 0), 0 20px 50px rgba(0, 0, 0, 0.55);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 113, 227, 0), 0 20px 50px rgba(0, 0, 0, 0.55);
+            }
+        }
+
+        .dynamic-island.pulse {
+            animation: islandPulse 0.8s ease-out;
+        }
+
+        /* Адаптивность Dynamic Island */
+        @media (max-width: 520px) {
+            .dynamic-island.expanded {
+                width: calc(100vw - 20px);
+                max-width: 400px;
+                border-radius: 32px;
+                padding: 16px 18px;
+                gap: 12px;
+            }
+            .di-btn {
+                padding: 10px 14px;
+                font-size: 13px;
+                min-width: 70px;
+            }
+            .di-title {
+                font-size: 15px;
+            }
+            .di-message {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .dynamic-island.expanded {
+                border-radius: 28px;
+                padding: 14px 16px;
+                gap: 10px;
+            }
+            .di-actions {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .di-btn {
+                width: 100%;
+                flex: none;
+            }
+        }
+
+        /* Анимации */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 800px) {
+            .whats-new-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        @media (max-width: 600px) {
+            .hero-title {
+                font-size: 40px;
+            }
+            .hero-subtitle {
+                font-size: 17px;
+            }
+            .glass-card {
+                padding: 28px;
+                max-width: 100%;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .hash-item {
+                flex-wrap: wrap;
+            }
+            .hash-item span:first-child {
+                margin-bottom: 4px;
+                width: 100%;
+            }
+            .hash-item code {
+                white-space: normal;
+                word-break: break-all;
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
 
-  <div class="glow-container">
-    <div class="glow-ball glow-1"></div>
-    <div class="glow-ball glow-2"></div>
-  </div>
-
-  <header>
-    <div class="logo">
-      <img src="thunder_wallet.ico" alt="Logo" onerror="this.style.display='none'">
-      <span>Thunder Wallet</span>
-    </div>
-    <div class="version-tag">v1.1</div>
-  </header>
-
-  <main>
-    <h1 class="hero-title">Молниеносный.<br>Безопасный. Твой.</h1>
-    <p class="hero-subtitle">Встречайте Thunder Wallet — некастодиальный Bitcoin Lightning кошелек с мгновенной установкой и непревзойденной защитой ваших активов.</p>
-
-    <div class="glass-card">
-      <a href="ThunderWallet-1.1-x64.msi" id="main-download-btn" class="btn-primary" data-arch="x64">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-          <polyline points="7 10 12 15 17 10"></polyline>
-          <line x1="12" y1="15" x2="12" y2="3"></line>
-        </svg>
-        <span id="btn-text">Установить для Windows</span>
-      </a>
-
-      <div class="sys-info" id="detected-os">Определена архитектура: Windows 64-bit</div>
-
-      <div class="secondary-downloads">
-        <a href="ThunderWallet-1.1-x64.msi" class="btn-secondary" data-arch="x64">Скачать x64 (.msi)</a>
-        <a href="ThunderWallet-1.1-x86.msi" class="btn-secondary" data-arch="x86">Скачать x86 (.msi)</a>
-      </div>
-
-      <!-- Хэши SHA256 -->
-      <div class="hash-section">
-        <h3>Контрольные суммы (SHA256)</h3>
-        <div class="hash-item">
-          <span>x64 MSI</span>
-          <code>1ee13d0ab2c6fadf2ce57226d93557c8b46b2e9d816484ff7a118b200a1d7e13</code>
-        </div>
-        <div class="hash-item">
-          <span>x86 MSI</span>
-          <code>2bb474e50d36eeee1caa2aa8b202cac13c19dffc2603a001c3361612891983ab</code>
-        </div>
-      </div>
+    <div class="glow-container">
+        <div class="glow-ball glow-1"></div>
+        <div class="glow-ball glow-2"></div>
     </div>
 
-    <!-- Что нового в v1.1 -->
-    <div class="whats-new-section">
-      <h2>Что нового в Thunder Wallet v1.1?</h2>
-      <div class="whats-new-grid">
-        <div class="whats-new-item">
-          <h3>🔒 Безопасность</h3>
-          <ul>
-            <li>Шифрование сид-фразы: Argon2id (64 МиБ памяти, 3 прохода) — устойчиво к GPU/ASIC.</li>
-            <li>Старые кошельки (PBKDF2) тихо мигрируют при разблокировке.</li>
-            <li>Обязательный пароль с живым чек-листом (минимум 8 символов, буквы, цифры, спецсимвол).</li>
-            <li>Защита от брутфорса: после 3 неудачных попыток блокировка растёт до 15 мин.</li>
-          </ul>
+    <!-- Dynamic Island Container -->
+    <div class="dynamic-island-container" id="dynamic-island-container">
+        <div class="dynamic-island" id="dynamic-island">
+            <!-- Свёрнутое содержимое (показывается когда остров не expanded) -->
+            <div class="collapsed-content" id="di-collapsed">
+                <span>⚡ Thunder</span>
+            </div>
+            <!-- Расширенное содержимое -->
+            <div class="expanded-content" id="di-expanded">
+                <div class="di-header">
+                    <div class="di-icon" id="di-icon">⚠️</div>
+                    <span class="di-title" id="di-title">Заголовок</span>
+                    <button class="di-close" id="di-close" aria-label="Закрыть">✕</button>
+                </div>
+                <p class="di-message" id="di-message">Сообщение</p>
+                <div class="di-actions" id="di-actions">
+                    <!-- Кнопки генерируются динамически -->
+                </div>
+            </div>
         </div>
-        <div class="whats-new-item">
-          <h3>⚡ Производительность</h3>
-          <ul>
-            <li>Глобальный аллокатор заменён на <strong>mimalloc</strong> — быстрее, меньше фрагментации.</li>
-            <li>Оптимизирован для слабых ноутбуков и большого числа мелких структур.</li>
-          </ul>
-        </div>
-        <div class="whats-new-item">
-          <h3>🎨 Интерфейс</h3>
-          <ul>
-            <li>Полный визуальный редизайн в стиле Apple Liquid Glass.</li>
-            <li>Свой заголовок окна с кнопками управления (как на macOS).</li>
-            <li>Старт в полноэкранном режиме, выход по Esc.</li>
-            <li>Анимированная навигация и капсульные кнопки.</li>
-          </ul>
-        </div>
-      </div>
     </div>
 
-    <!-- Описание приложения -->
-    <div class="features-section">
-      <h2>Почему Thunder Wallet?</h2>
-      <div class="features-grid">
-        <div class="feature-item">
-          <h3>⚡ Мгновенные платежи</h3>
-          <p>Используйте Lightning Network для быстрых и дешевых транзакций в сети Биткоин.</p>
+    <header>
+        <div class="logo">
+            <img src="thunder_wallet.ico" alt="Logo" onerror="this.style.display='none'">
+            <span>Thunder Wallet</span>
         </div>
-        <div class="feature-item">
-          <h3>🔒 Некастодиальный</h3>
-          <p>Ваши ключи — ваши монеты. Сид-фраза шифруется локально и никогда не передается.</p>
+        <div class="version-tag">v1.1</div>
+    </header>
+
+    <main>
+        <h1 class="hero-title">Молниеносный.<br>Безопасный. Твой.</h1>
+        <p class="hero-subtitle">Встречайте Thunder Wallet — некастодиальный Bitcoin Lightning кошелек с мгновенной установкой и непревзойденной защитой ваших активов.</p>
+
+        <div class="glass-card">
+            <a href="ThunderWallet-1.1-x64.msi" id="main-download-btn" class="btn-primary" data-arch="x64">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span id="btn-text">Установить для Windows</span>
+            </a>
+
+            <div class="sys-info" id="detected-os">Определена архитектура: Windows 64-bit</div>
+
+            <div class="secondary-downloads">
+                <a href="ThunderWallet-1.1-x64.msi" class="btn-secondary" data-arch="x64">Скачать x64 (.msi)</a>
+                <a href="ThunderWallet-1.1-x86.msi" class="btn-secondary" data-arch="x86">Скачать x86 (.msi)</a>
+            </div>
+
+            <div class="hash-section">
+                <h3>Контрольные суммы (SHA256)</h3>
+                <div class="hash-item">
+                    <span>x64 MSI</span>
+                    <code>1ee13d0ab2c6fadf2ce57226d93557c8b46b2e9d816484ff7a118b200a1d7e13</code>
+                </div>
+                <div class="hash-item">
+                    <span>x86 MSI</span>
+                    <code>2bb474e50d36eeee1caa2aa8b202cac13c19dffc2603a001c3361612891983ab</code>
+                </div>
+            </div>
         </div>
-        <div class="feature-item">
-          <h3>🎨 Стильный интерфейс</h3>
-          <p>Дизайн в стиле Apple Liquid Glass — современный, интуитивный и приятный в использовании.</p>
+
+        <div class="whats-new-section">
+            <h2>Что нового в Thunder Wallet v1.1?</h2>
+            <div class="whats-new-grid">
+                <div class="whats-new-item">
+                    <h3>🔒 Безопасность</h3>
+                    <ul>
+                        <li>Шифрование сид-фразы: Argon2id (64 МиБ памяти, 3 прохода) — устойчиво к GPU/ASIC.</li>
+                        <li>Старые кошельки (PBKDF2) тихо мигрируют при разблокировке.</li>
+                        <li>Обязательный пароль с живым чек-листом (минимум 8 символов, буквы, цифры, спецсимвол).</li>
+                        <li>Защита от брутфорса: после 3 неудачных попыток блокировка растёт до 15 мин.</li>
+                    </ul>
+                </div>
+                <div class="whats-new-item">
+                    <h3>⚡ Производительность</h3>
+                    <ul>
+                        <li>Глобальный аллокатор заменён на <strong>mimalloc</strong> — быстрее, меньше фрагментации.</li>
+                        <li>Оптимизирован для слабых ноутбуков и большого числа мелких структур.</li>
+                    </ul>
+                </div>
+                <div class="whats-new-item">
+                    <h3>🎨 Интерфейс</h3>
+                    <ul>
+                        <li>Полный визуальный редизайн в стиле Apple Liquid Glass.</li>
+                        <li>Свой заголовок окна с кнопками управления (как на macOS).</li>
+                        <li>Старт в полноэкранном режиме, выход по Esc.</li>
+                        <li>Анимированная навигация и капсульные кнопки.</li>
+                    </ul>
+                </div>
+            </div>
         </div>
-        <div class="feature-item">
-          <h3>🛡️ Защита от брутфорса</h3>
-          <p>Встроенный механизм блокировки и контроля попыток входа для максимальной безопасности.</p>
+
+        <div class="features-section">
+            <h2>Почему Thunder Wallet?</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <h3>⚡ Мгновенные платежи</h3>
+                    <p>Используйте Lightning Network для быстрых и дешевых транзакций в сети Биткоин.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔒 Некастодиальный</h3>
+                    <p>Ваши ключи — ваши монеты. Сид-фраза шифруется локально и никогда не передается.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🎨 Стильный интерфейс</h3>
+                    <p>Дизайн в стиле Apple Liquid Glass — современный, интуитивный и приятный в использовании.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🛡️ Защита от брутфорса</h3>
+                    <p>Встроенный механизм блокировки и контроля попыток входа для максимальной безопасности.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🌐 Полный контроль</h3>
+                    <p>Управляйте каналами, балансами, платежами — всё в одном приложении без посредников.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔋 Энергоэффективность</h3>
+                    <p>Оптимизирован для работы на слабых ноутбуках, потребляет минимум ресурсов.</p>
+                </div>
+            </div>
         </div>
-        <div class="feature-item">
-          <h3>🌐 Полный контроль</h3>
-          <p>Управляйте каналами, балансами, платежами — всё в одном приложении без посредников.</p>
-        </div>
-        <div class="feature-item">
-          <h3>🔋 Энергоэффективность</h3>
-          <p>Оптимизирован для работы на слабых ноутбуках, потребляет минимум ресурсов.</p>
-        </div>
-      </div>
-    </div>
-  </main>
+    </main>
 
-  <footer>
-    © 2026 MikeCorporation_LLC(TM). Все права защищены.
-  </footer>
+    <footer>
+        © 2026 MikeCorporation_LLC(TM). Все права защищены.
+    </footer>
 
-  <!-- Модальные окна -->
-  <div id="modal-overlay" class="modal-overlay">
-    <div class="modal-box" id="modal-box">
-      <h2 id="modal-title">Заголовок</h2>
-      <p id="modal-text">Сообщение</p>
-      <div class="modal-actions" id="modal-actions">
-        <!-- Кнопки будут добавлены динамически -->
-      </div>
-    </div>
-  </div>
+    <script>
+        (function() {
+            // --- Элементы Dynamic Island ---
+            const island = document.getElementById('dynamic-island');
+            const islandContainer = document.getElementById('dynamic-island-container');
+            const diCollapsed = document.getElementById('di-collapsed');
+            const diExpanded = document.getElementById('di-expanded');
+            const diIcon = document.getElementById('di-icon');
+            const diTitle = document.getElementById('di-title');
+            const diMessage = document.getElementById('di-message');
+            const diActions = document.getElementById('di-actions');
+            const diClose = document.getElementById('di-close');
 
-  <script>
-    // --- Определение ОС и архитектуры ---
-    function detectOSAndArch() {
-      const ua = navigator.userAgent;
-      const isWindows = ua.indexOf("Windows") !== -1 || ua.indexOf("Win") !== -1;
-      let arch = null;
-      let os = "unknown";
+            let isExpanded = false;
+            let collapseTimer = null;
+            let currentConfig = null;
 
-      if (isWindows) {
-        os = "Windows";
-        // Определение архитектуры
-        const isARM = ua.indexOf("ARM") !== -1 || ua.indexOf("ARM64") !== -1;
-        const isWOW64 = ua.indexOf("WOW64") !== -1;
-        const isWin64 = ua.indexOf("Win64") !== -1 || ua.indexOf("x64") !== -1;
+            // --- Свернуть остров ---
+            function collapseIsland(instant = false) {
+                if (!isExpanded) return;
+                isExpanded = false;
+                if (collapseTimer) clearTimeout(collapseTimer);
+                collapseTimer = null;
+                currentConfig = null;
 
-        if (isARM) {
-          arch = "arm64";
-        } else if (isWOW64 || (isWin64 && !isWOW64)) {
-          arch = "x64";
-        } else {
-          arch = "x86";
-        }
-      } else {
-        os = "non-windows";
-        // Можем попробовать определить ARM или другую архитектуру, но для не-Windows не важно.
-        if (ua.indexOf("ARM") !== -1) arch = "arm";
-        else if (ua.indexOf("x64") !== -1 || ua.indexOf("Win64") !== -1) arch = "x64";
-        else if (ua.indexOf("x86") !== -1) arch = "x86";
-        else arch = "unknown";
-      }
+                if (instant) {
+                    island.style.transition = 'none';
+                } else {
+                    island.style.transition =
+                        'width 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.45s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
+                }
 
-      return { os, arch };
-    }
+                island.classList.remove('expanded');
+                island.classList.remove('pulse');
+                island.style.width = '140px';
+                island.style.height = '44px';
+                island.style.borderRadius = '44px';
+                island.style.padding = '0 18px';
+                diCollapsed.style.opacity = '1';
+                diCollapsed.style.position = 'static';
+                diCollapsed.style.pointerEvents = 'auto';
+                diExpanded.style.display = 'none';
+                diExpanded.style.opacity = '0';
 
-    // --- Показать модальное окно ---
-    function showModal(title, text, buttons) {
-      const overlay = document.getElementById('modal-overlay');
-      const titleEl = document.getElementById('modal-title');
-      const textEl = document.getElementById('modal-text');
-      const actionsEl = document.getElementById('modal-actions');
+                if (instant) {
+                    // Принудительно сбросить переход после мгновенного изменения
+                    requestAnimationFrame(() => {
+                        island.style.transition =
+                            'width 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), height 0.65s cubic-bezier(0.22, 0.99, 0.41, 1.01), border-radius 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), padding 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01), opacity 0.35s ease, transform 0.55s cubic-bezier(0.22, 0.99, 0.41, 1.01)';
+                    });
+                }
+            }
 
-      titleEl.textContent = title;
-      textEl.textContent = text;
-      actionsEl.innerHTML = '';
+            // --- Развернуть остров с контентом ---
+            function expandIsland(config) {
+                // Очищаем предыдущий таймер
+                if (collapseTimer) clearTimeout(collapseTimer);
+                collapseTimer = null;
+                currentConfig = config;
 
-      buttons.forEach((btn) => {
-        const button = document.createElement('a');
-        button.textContent = btn.label;
-        button.className = `modal-btn ${btn.class || 'modal-btn-primary'}`;
-        if (btn.href) {
-          button.href = btn.href;
-          button.download = btn.download !== false;
-        }
-        if (btn.onClick) {
-          button.addEventListener('click', (e) => {
-            e.preventDefault();
-            if (btn.onClick) btn.onClick();
-          });
-        }
-        actionsEl.appendChild(button);
-      });
+                // Заполняем контент
+                diIcon.textContent = config.icon || '⚠️';
+                diIcon.className = 'di-icon ' + (config.iconType || 'warning');
+                diTitle.textContent = config.title || 'Уведомление';
+                diMessage.textContent = config.message || '';
+                diActions.innerHTML = '';
 
-      overlay.classList.add('active');
-    }
+                if (config.buttons && config.buttons.length > 0) {
+                    config.buttons.forEach(btn => {
+                        const button = document.createElement(btn.href ? 'a' : 'button');
+                        button.textContent = btn.label;
+                        button.className = 'di-btn ' + (btn.class || 'di-btn-primary');
+                        if (btn.href) {
+                            button.href = btn.href;
+                            button.setAttribute('download', btn.download !== false ? '' : null);
+                        }
+                        button.addEventListener('click', function(e) {
+                            if (btn.onClick) {
+                                e.preventDefault();
+                                btn.onClick();
+                            }
+                            // После клика по кнопке действия — сворачиваем остров
+                            if (btn.closeAfter !== false) {
+                                collapseIsland();
+                            }
+                        });
+                        diActions.appendChild(button);
+                    });
+                } else {
+                    // Кнопка "Понятно" по умолчанию
+                    const okBtn = document.createElement('button');
+                    okBtn.textContent = 'Понятно';
+                    okBtn.className = 'di-btn di-btn-primary';
+                    okBtn.addEventListener('click', () => collapseIsland());
+                    diActions.appendChild(okBtn);
+                }
 
-    // --- Закрыть модальное окно ---
-    function closeModal() {
-      document.getElementById('modal-overlay').classList.remove('active');
-    }
+                // Сначала показываем expanded content
+                diExpanded.style.display = 'flex';
+                diCollapsed.style.opacity = '0';
+                diCollapsed.style.position = 'absolute';
+                diCollapsed.style.pointerEvents = 'none';
 
-    // --- Обработка кликов по ссылкам скачивания ---
-    function handleDownloadClick(e, link) {
-      e.preventDefault();
-      const href = link.getAttribute('href');
-      const archAttr = link.getAttribute('data-arch');
-      const { os, arch } = detectOSAndArch();
+                // Даём браузеру кадр на отрисовку скрытого состояния
+                requestAnimationFrame(() => {
+                    requestAnimationFrame(() => {
+                        island.classList.add('expanded');
+                        island.classList.add('pulse');
+                        island.style.width = '420px';
+                        island.style.height = 'auto';
+                        island.style.borderRadius = '36px';
+                        island.style.padding = '20px 24px';
+                        diExpanded.style.opacity = '1';
+                        isExpanded = true;
 
-      // Если не Windows
-      if (os !== 'Windows') {
-        showModal(
-          'Приложение только для Windows',
-          'Thunder Wallet работает только на Windows. Вы можете скачать установщик, но он не запустится на вашей ОС.',
-          [
-            { label: 'Всё равно скачать', href: href, class: 'modal-btn-danger' },
-            { label: 'Закрыть', onClick: closeModal, class: 'modal-btn-secondary' }
-          ]
-        );
-        return;
-      }
+                        // Убираем пульсацию после анимации
+                        setTimeout(() => {
+                            island.classList.remove('pulse');
+                        }, 800);
+                    });
+                });
 
-      // Если ARM
-      if (arch === 'arm64' || arch === 'arm') {
-        showModal(
-          'ARM не поддерживается',
-          'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию, но это не гарантирует стабильную работу.',
-          [
-            { label: 'Скачать x64 (попробовать)', href: 'ThunderWallet-1.1-x64.msi', class: 'modal-btn-danger' },
-            { label: 'Закрыть', onClick: closeModal, class: 'modal-btn-secondary' }
-          ]
-        );
-        return;
-      }
+                // Автосворачивание через 15 секунд бездействия
+                collapseTimer = setTimeout(() => {
+                    if (isExpanded && currentConfig === config) {
+                        collapseIsland();
+                    }
+                }, 15000);
+            }
 
-      // Определяем, какую версию пытается скачать пользователь
-      const targetArch = archAttr || 'x64'; // если не указано, считаем x64
+            // --- Показать Dynamic Island уведомление ---
+            function showDynamicIsland(config) {
+                // Если уже развёрнут — сначала сворачиваем мгновенно, потом разворачиваем с новым
+                if (isExpanded) {
+                    collapseIsland(true);
+                    setTimeout(() => {
+                        expandIsland(config);
+                    }, 350);
+                } else {
+                    // Если свёрнут — просто показываем и разворачиваем
+                    if (!island.classList.contains('active')) {
+                        island.classList.add('active');
+                    }
+                    setTimeout(() => {
+                        expandIsland(config);
+                    }, 100);
+                }
 
-      // Если пользователь на x64 и пытается скачать x86
-      if (arch === 'x64' && targetArch === 'x86') {
-        showModal(
-          'Рекомендуется x64 версия',
-          'Ваше устройство поддерживает 64-битную архитектуру. Для лучшей производительности и стабильности рекомендуем скачать x64 версию.',
-          [
-            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'modal-btn-primary' },
-            { label: 'Всё равно x86', href: href, class: 'modal-btn-secondary' }
-          ]
-        );
-        return;
-      }
+                // Убедимся что остров видим
+                if (!island.classList.contains('active')) {
+                    island.classList.add('active');
+                }
+            }
 
-      // Если пользователь на x86 и пытается скачать x64
-      if (arch === 'x86' && targetArch === 'x64') {
-        showModal(
-          'x64 не поддерживается',
-          'Ваше устройство работает на 32-битной архитектуре, которая не поддерживает x64-приложения. Рекомендуем скачать x86 версию.',
-          [
-            { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'modal-btn-primary' },
-            { label: 'Закрыть', onClick: closeModal, class: 'modal-btn-secondary' }
-          ]
-        );
-        return;
-      }
+            // --- Закрытие по крестику ---
+            diClose.addEventListener('click', (e) => {
+                e.stopPropagation();
+                collapseIsland();
+            });
 
-      // Если всё правильно — разрешаем скачивание
-      window.location.href = href;
-    }
+            // --- Клик по свёрнутому острову — ничего не делаем (или можно показывать подсказку) ---
+            island.addEventListener('click', function(e) {
+                // Если клик был по кнопке закрытия или кнопкам действий — не обрабатываем
+                if (e.target.closest('.di-close') || e.target.closest('.di-btn')) {
+                    return;
+                }
+                // Если свёрнут — можно снова развернуть последнее уведомление
+                if (!isExpanded && currentConfig) {
+                    expandIsland(currentConfig);
+                }
+            });
 
-    // --- Привязка событий ко всем ссылкам скачивания ---
-    document.addEventListener('DOMContentLoaded', function() {
-      const downloadLinks = document.querySelectorAll('a[href$=".msi"]');
-      downloadLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-          handleDownloadClick(e, this);
-        });
-      });
+            // --- Определение ОС и архитектуры ---
+            function detectOSAndArch() {
+                const ua = navigator.userAgent;
+                const isWindows = ua.indexOf("Windows") !== -1 || ua.indexOf("Win") !== -1;
+                let arch = null;
+                let os = "unknown";
 
-      // Обновление информации об ОС
-      const { os, arch } = detectOSAndArch();
-      const osText = document.getElementById('detected-os');
-      if (os === 'Windows') {
-        let archName = 'неизвестно';
-        if (arch === 'x64') archName = '64-bit (x64)';
-        else if (arch === 'x86') archName = '32-bit (x86)';
-        else if (arch === 'arm64') archName = 'ARM64';
-        else if (arch === 'arm') archName = 'ARM';
-        osText.textContent = `✔ Определена архитектура: Windows ${archName}`;
-      } else {
-        osText.textContent = '⚠ Thunder Wallet доступен только для Windows';
-      }
+                if (isWindows) {
+                    os = "Windows";
+                    const isARM = ua.indexOf("ARM") !== -1 || ua.indexOf("ARM64") !== -1;
+                    const isWOW64 = ua.indexOf("WOW64") !== -1;
+                    const isWin64 = ua.indexOf("Win64") !== -1 || ua.indexOf("x64") !== -1;
 
-      // Автоматический выбор главной кнопки (по умолчанию x64)
-      const mainBtn = document.getElementById('main-download-btn');
-      if (arch === 'x86' && os === 'Windows') {
-        mainBtn.href = 'ThunderWallet-1.1-x86.msi';
-        mainBtn.setAttribute('data-arch', 'x86');
-        document.getElementById('btn-text').textContent = 'Установить (32-bit MSI)';
-      } else if (arch === 'arm64' || arch === 'arm') {
-        mainBtn.href = 'ThunderWallet-1.1-x64.msi';
-        mainBtn.setAttribute('data-arch', 'x64');
-        document.getElementById('btn-text').textContent = 'ARM не поддерживается';
-      } else {
-        // x64 или unknown -> x64
-        mainBtn.href = 'ThunderWallet-1.1-x64.msi';
-        mainBtn.setAttribute('data-arch', 'x64');
-        document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
-      }
-    });
+                    if (isARM) {
+                        arch = "arm64";
+                    } else if (isWOW64 || (isWin64 && !isWOW64)) {
+                        arch = "x64";
+                    } else {
+                        arch = "x86";
+                    }
+                } else {
+                    os = "non-windows";
+                    if (ua.indexOf("ARM") !== -1) arch = "arm";
+                    else if (ua.indexOf("x64") !== -1 || ua.indexOf("Win64") !== -1) arch = "x64";
+                    else if (ua.indexOf("x86") !== -1) arch = "x86";
+                    else arch = "unknown";
+                }
 
-    // Закрытие модального окна по клику вне него
-    document.getElementById('modal-overlay').addEventListener('click', function(e) {
-      if (e.target === this) closeModal();
-    });
-  </script>
+                return { os, arch };
+            }
+
+            // --- Обработка кликов по ссылкам скачивания ---
+            function handleDownloadClick(e, link) {
+                e.preventDefault();
+                const href = link.getAttribute('href');
+                const archAttr = link.getAttribute('data-arch');
+                const { os, arch } = detectOSAndArch();
+
+                // Если не Windows
+                if (os !== 'Windows') {
+                    showDynamicIsland({
+                        icon: '💻',
+                        iconType: 'warning',
+                        title: 'Только для Windows',
+                        message: 'Thunder Wallet работает только на Windows. Вы можете скачать установщик, но он не запустится на вашей ОС.',
+                        buttons: [
+                            { label: 'Всё равно скачать', href: href, class: 'di-btn-danger', closeAfter: true,
+                                download: true },
+                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
+                                closeAfter: true }
+                        ]
+                    });
+                    return;
+                }
+
+                // Если ARM
+                if (arch === 'arm64' || arch === 'arm') {
+                    showDynamicIsland({
+                        icon: '🖥️',
+                        iconType: 'warning',
+                        title: 'ARM не поддерживается',
+                        message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию, но стабильная работа не гарантируется.',
+                        buttons: [
+                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-danger',
+                                closeAfter: true, download: true },
+                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
+                                closeAfter: true }
+                        ]
+                    });
+                    return;
+                }
+
+                const targetArch = archAttr || 'x64';
+
+                // x64 юзер качает x86
+                if (arch === 'x64' && targetArch === 'x86') {
+                    showDynamicIsland({
+                        icon: '💡',
+                        iconType: 'info',
+                        title: 'Рекомендуется x64',
+                        message: 'Ваше устройство поддерживает 64-битную архитектуру. Для лучшей производительности советуем скачать x64 версию.',
+                        buttons: [
+                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-primary',
+                                closeAfter: true, download: true },
+                            { label: 'Всё равно x86', href: href, class: 'di-btn-secondary', closeAfter: true,
+                                download: true }
+                        ]
+                    });
+                    return;
+                }
+
+                // x86 юзер качает x64
+                if (arch === 'x86' && targetArch === 'x64') {
+                    showDynamicIsland({
+                        icon: '⚠️',
+                        iconType: 'warning',
+                        title: 'x64 не поддерживается',
+                        message: 'Ваше устройство работает на 32-битной архитектуре. x64-приложения не запустятся. Рекомендуем скачать x86 версию.',
+                        buttons: [
+                            { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'di-btn-primary',
+                                closeAfter: true, download: true },
+                            { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
+                                closeAfter: true }
+                        ]
+                    });
+                    return;
+                }
+
+                // Всё корректно — начинаем загрузку
+                window.location.href = href;
+                // Показываем небольшое уведомление об успешном начале загрузки
+                showDynamicIsland({
+                    icon: '✅',
+                    iconType: 'success',
+                    title: 'Загрузка началась',
+                    message: 'Установщик Thunder Wallet (' + targetArch + ') загружается. Откройте файл после завершения загрузки.',
+                    buttons: [
+                        { label: 'Отлично', onClick: () => collapseIsland(), class: 'di-btn-primary',
+                            closeAfter: true }
+                    ]
+                });
+            }
+
+            // --- Привязка событий ---
+            document.addEventListener('DOMContentLoaded', function() {
+                const downloadLinks = document.querySelectorAll('a[href$=".msi"]');
+                downloadLinks.forEach(link => {
+                    link.addEventListener('click', function(e) {
+                        handleDownloadClick(e, this);
+                    });
+                });
+
+                // Обновление информации об ОС
+                const { os, arch } = detectOSAndArch();
+                const osText = document.getElementById('detected-os');
+                if (os === 'Windows') {
+                    let archName = 'неизвестно';
+                    if (arch === 'x64') archName = '64-bit (x64)';
+                    else if (arch === 'x86') archName = '32-bit (x86)';
+                    else if (arch === 'arm64') archName = 'ARM64';
+                    else if (arch === 'arm') archName = 'ARM';
+                    osText.textContent = `✔ Определена архитектура: Windows ${archName}`;
+                } else {
+                    osText.textContent = '⚠ Thunder Wallet доступен только для Windows';
+                }
+
+                // Автоматический выбор главной кнопки
+                const mainBtn = document.getElementById('main-download-btn');
+                if (arch === 'x86' && os === 'Windows') {
+                    mainBtn.href = 'ThunderWallet-1.1-x86.msi';
+                    mainBtn.setAttribute('data-arch', 'x86');
+                    document.getElementById('btn-text').textContent = 'Установить (32-bit MSI)';
+                } else if (arch === 'arm64' || arch === 'arm') {
+                    mainBtn.href = 'ThunderWallet-1.1-x64.msi';
+                    mainBtn.setAttribute('data-arch', 'x64');
+                    document.getElementById('btn-text').textContent = 'ARM не поддерживается';
+                } else {
+                    mainBtn.href = 'ThunderWallet-1.1-x64.msi';
+                    mainBtn.setAttribute('data-arch', 'x64');
+                    document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
+                }
+
+                // Изначально показываем остров свёрнутым
+                setTimeout(() => {
+                    island.classList.add('active');
+                }, 600);
+            });
+
+            // Экспорт для возможного использования извне
+            window.ThunderDynamicIsland = {
+                show: showDynamicIsland,
+                collapse: collapseIsland,
+                expand: expandIsland,
+            };
+        })();
+    </script>
 </body>
 </html>
