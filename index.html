@@ -17,7 +17,6 @@
             --danger: #ff453a;
             --glass-bg: rgba(255, 255, 255, 0.06);
             --glass-border: rgba(255, 255, 255, 0.12);
-            /* Более плавные spring-кривые в стиле Apple */
             --spring-soft: cubic-bezier(0.25, 0.85, 0.45, 1.02);
             --spring-smooth: cubic-bezier(0.22, 0.84, 0.37, 1.01);
             --spring-bounce: cubic-bezier(0.34, 1.4, 0.64, 1);
@@ -240,6 +239,56 @@
             font-size: 12px;
             color: #6e6e73;
             letter-spacing: -0.1px;
+        }
+
+        .requirements-section {
+            margin-top: 60px;
+            max-width: 800px;
+            text-align: left;
+            padding: 0 20px;
+            animation: fadeInUp 1.2s ease-out 0.3s both;
+        }
+        .requirements-section h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+        }
+        .requirements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .req-card {
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 22px;
+            padding: 22px;
+            transition: transform 0.35s var(--spring-smooth), border-color 0.35s, box-shadow 0.35s;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+        .req-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.22);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+        }
+        .req-card h3 {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .req-card p {
+            font-size: 13px;
+            color: #a1a1a6;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .features-section {
@@ -755,6 +804,9 @@
             .whats-new-grid {
                 grid-template-columns: 1fr;
             }
+            .requirements-grid {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
         @media (max-width: 600px) {
@@ -769,6 +821,9 @@
                 max-width: 100%;
             }
             .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .requirements-grid {
                 grid-template-columns: 1fr;
             }
             .hash-item {
@@ -845,7 +900,7 @@
                     </div>
                     <span>Thunder Wallet</span>
                 </div>
-                <span class="collapsed-version">v1.1</span>
+                <span class="collapsed-version">v1.2</span>
             </div>
 
             <!-- Расширенное состояние (уведомление) -->
@@ -863,10 +918,10 @@
 
     <main>
         <h1 class="hero-title">Молниеносный.<br>Безопасный. Твой.</h1>
-        <p class="hero-subtitle">Встречайте Thunder Wallet — некастодиальный Bitcoin Lightning кошелек с мгновенной установкой и непревзойденной защитой ваших активов.</p>
+        <p class="hero-subtitle">Встречайте Thunder Wallet — некастодиальный Bitcoin Lightning кошелек с усиленной криптозащитой и двухфакторной аутентификацией.</p>
 
         <div class="glass-card">
-            <a href="ThunderWallet-1.1-x64.msi" id="main-download-btn" class="btn-primary" data-arch="x64">
+            <a href="ThunderWallet-1.2-x64.msi" id="main-download-btn" class="btn-primary" data-arch="x64">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                     <polyline points="7 10 12 15 17 10"></polyline>
@@ -878,50 +933,75 @@
             <div class="sys-info" id="detected-os">Определена архитектура: Windows 64-bit</div>
 
             <div class="secondary-downloads">
-                <a href="ThunderWallet-1.1-x64.msi" class="btn-secondary" data-arch="x64">Скачать x64 (.msi)</a>
-                <a href="ThunderWallet-1.1-x86.msi" class="btn-secondary" data-arch="x86">Скачать x86 (.msi)</a>
+                <a href="ThunderWallet-1.2-x64.msi" class="btn-secondary" data-arch="x64">Скачать x64 (.msi)</a>
+                <a href="ThunderWallet-1.2-x86.msi" class="btn-secondary" data-arch="x86">Скачать x86 (.msi)</a>
             </div>
 
             <div class="hash-section">
                 <h3>Контрольные суммы (SHA256)</h3>
                 <div class="hash-item">
                     <span>x64 MSI</span>
-                    <code>1ee13d0ab2c6fadf2ce57226d93557c8b46b2e9d816484ff7a118b200a1d7e13</code>
+                    <code>27c88216b8dc6909a6901456dee986bf0ad2b55b4d35f9a3542299cff95d2abd</code>
                 </div>
                 <div class="hash-item">
                     <span>x86 MSI</span>
-                    <code>2bb474e50d36eeee1caa2aa8b202cac13c19dffc2603a001c3361612891983ab</code>
+                    <code>a7eec765045ea6af4459575595164fc0d8f4521a7d83a112008477fcce2f664d</code>
                 </div>
             </div>
         </div>
 
         <div class="whats-new-section">
-            <h2>Что нового в Thunder Wallet v1.1?</h2>
+            <h2>Что нового в Thunder Wallet v1.2?</h2>
             <div class="whats-new-grid">
                 <div class="whats-new-item">
-                    <h3>🔒 Безопасность</h3>
+                    <h3>🔒 Криптозащита</h3>
                     <ul>
-                        <li>Шифрование сид-фразы: Argon2id (64 МиБ памяти, 3 прохода) — устойчиво к GPU/ASIC.</li>
-                        <li>Старые кошельки (PBKDF2) тихо мигрируют при разблокировке.</li>
-                        <li>Обязательный пароль с живым чек-листом (минимум 8 символов, буквы, цифры, спецсимвол).</li>
-                        <li>Защита от брутфорса: после 3 неудачных попыток блокировка растёт до 15 мин.</li>
+                        <li>Argon2id усилен: 512 МБ памяти, 25 проходов, 6 ядер CPU.</li>
+                        <li>HMAC-SHA256 для файла сид-фразы — подмена обнаруживается мгновенно.</li>
+                        <li>Память с ключами блокируется в ОЗУ (mlock) — не уходит в своп.</li>
                     </ul>
                 </div>
                 <div class="whats-new-item">
-                    <h3>⚡ Производительность</h3>
+                    <h3>🛡️ 2FA и PIN</h3>
                     <ul>
-                        <li>Глобальный аллокатор заменён на <strong>mimalloc</strong> — быстрее, меньше фрагментации.</li>
-                        <li>Оптимизирован для слабых ноутбуков и большого числа мелких структур.</li>
+                        <li>Второй фактор: TOTP (Google Authenticator) с QR-кодом.</li>
+                        <li>Дополнительный 4–6-значный PIN после пароля.</li>
+                        <li>Блокировка после неудачных попыток увеличена до 2 часов.</li>
                     </ul>
                 </div>
                 <div class="whats-new-item">
-                    <h3>🎨 Интерфейс</h3>
+                    <h3>🐞 Исправления</h3>
                     <ul>
-                        <li>Полный визуальный редизайн в стиле Apple Liquid Glass.</li>
-                        <li>Свой заголовок окна с кнопками управления (как на macOS).</li>
-                        <li>Старт в полноэкранном режиме, выход по Esc.</li>
-                        <li>Анимированная навигация и капсульные кнопки.</li>
+                        <li>Устранён краш при разблокировке без интернета.</li>
+                        <li>Защита от отладчика и виртуальных машин.</li>
+                        <li>Затруднён дамп памяти процесса с секретами.</li>
                     </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="requirements-section">
+            <h2>Минимальные требования</h2>
+            <div class="requirements-grid">
+                <div class="req-card">
+                    <h3>🖥️ ОС</h3>
+                    <p>Windows 7 SP1 и новее. Рекомендуется Windows 10/11 64-bit.</p>
+                </div>
+                <div class="req-card">
+                    <h3>🧠 Память</h3>
+                    <p>2 ГБ ОЗУ. При разблокировке временно до 512 МБ под Argon2id.</p>
+                </div>
+                <div class="req-card">
+                    <h3>⚙️ Процессор</h3>
+                    <p>2 ядра, от 1.6 ГГц. 4 ядра ускоряют расшифровку ключей.</p>
+                </div>
+                <div class="req-card">
+                    <h3>🎮 Графика</h3>
+                    <p>Аппаратное ускорение с авто-откатом на программный рендеринг.</p>
+                </div>
+                <div class="req-card">
+                    <h3>💾 Накопитель</h3>
+                    <p>~50 МБ приложение. Рекомендуется SSD для быстрой синхронизации LDK.</p>
                 </div>
             </div>
         </div>
@@ -938,20 +1018,20 @@
                     <p>Ваши ключи — ваши монеты. Сид-фраза шифруется локально и никогда не передается.</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🎨 Стильный интерфейс</h3>
-                    <p>Дизайн в стиле Apple Liquid Glass — современный, интуитивный и приятный в использовании.</p>
+                    <h3>🛡️ 2FA и PIN</h3>
+                    <p>TOTP (Google Authenticator) и дополнительный PIN для разблокировки кошелька.</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🛡️ Защита от брутфорса</h3>
-                    <p>Встроенный механизм блокировки и контроля попыток входа для максимальной безопасности.</p>
+                    <h3>🧬 Argon2id + HMAC</h3>
+                    <p>512 МБ памяти, 25 проходов KDF. Целостность файла проверяется до расшифровки.</p>
                 </div>
                 <div class="feature-item">
-                    <h3>🌐 Полный контроль</h3>
-                    <p>Управляйте каналами, балансами, платежами — всё в одном приложении без посредников.</p>
+                    <h3>🕵️ Анти-отладка</h3>
+                    <p>Блокирует запуск в ВМ и при подключённом отладчике, защищает дамп памяти.</p>
                 </div>
                 <div class="feature-item">
                     <h3>🔋 Энергоэффективность</h3>
-                    <p>Оптимизирован для работы на слабых ноутбуках, потребляет минимум ресурсов.</p>
+                    <p>Оптимизирован для слабых ноутбуков, потребляет минимум ресурсов.</p>
                 </div>
             </div>
         </div>
@@ -1053,7 +1133,6 @@
                 diCollapsed.style.position = 'absolute';
                 diCollapsed.style.pointerEvents = 'none';
 
-                // Плавный разворот через двойной requestAnimationFrame
                 requestAnimationFrame(() => {
                     requestAnimationFrame(() => {
                         island.classList.add('expanded');
@@ -1143,7 +1222,7 @@
                         title: 'ARM не поддерживается',
                         message: 'Thunder Wallet не поддерживает ARM-процессоры. Вы можете попробовать запустить x64-версию через эмуляцию.',
                         buttons: [
-                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-danger',
+                            { label: 'Скачать x64', href: 'ThunderWallet-1.2-x64.msi', class: 'di-btn-danger',
                                 closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
                                 closeAfter: true }
@@ -1160,7 +1239,7 @@
                         title: 'Рекомендуется x64',
                         message: 'Ваше устройство поддерживает 64-бит. Для лучшей производительности советуем x64.',
                         buttons: [
-                            { label: 'Скачать x64', href: 'ThunderWallet-1.1-x64.msi', class: 'di-btn-primary',
+                            { label: 'Скачать x64', href: 'ThunderWallet-1.2-x64.msi', class: 'di-btn-primary',
                                 closeAfter: true, download: true },
                             { label: 'Всё равно x86', href, class: 'di-btn-secondary', closeAfter: true,
                                 download: true }
@@ -1175,7 +1254,7 @@
                         title: 'x64 не поддерживается',
                         message: 'Ваше устройство 32-битное. x64 не запустится. Рекомендуем x86.',
                         buttons: [
-                            { label: 'Скачать x86', href: 'ThunderWallet-1.1-x86.msi', class: 'di-btn-primary',
+                            { label: 'Скачать x86', href: 'ThunderWallet-1.2-x86.msi', class: 'di-btn-primary',
                                 closeAfter: true, download: true },
                             { label: 'Закрыть', onClick: () => collapseIsland(), class: 'di-btn-secondary',
                                 closeAfter: true }
@@ -1217,15 +1296,15 @@
 
                 const mainBtn = document.getElementById('main-download-btn');
                 if (arch === 'x86' && os === 'Windows') {
-                    mainBtn.href = 'ThunderWallet-1.1-x86.msi';
+                    mainBtn.href = 'ThunderWallet-1.2-x86.msi';
                     mainBtn.setAttribute('data-arch', 'x86');
                     document.getElementById('btn-text').textContent = 'Установить (32-bit MSI)';
                 } else if (arch === 'arm64' || arch === 'arm') {
-                    mainBtn.href = 'ThunderWallet-1.1-x64.msi';
+                    mainBtn.href = 'ThunderWallet-1.2-x64.msi';
                     mainBtn.setAttribute('data-arch', 'x64');
                     document.getElementById('btn-text').textContent = 'ARM не поддерживается';
                 } else {
-                    mainBtn.href = 'ThunderWallet-1.1-x64.msi';
+                    mainBtn.href = 'ThunderWallet-1.2-x64.msi';
                     mainBtn.setAttribute('data-arch', 'x64');
                     document.getElementById('btn-text').textContent = 'Установить (64-bit MSI)';
                 }
